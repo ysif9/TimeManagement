@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.timemanagement.Controllers.NavBarController"
+      stylesheets="@../Styles/NavBar.css" fx:id="navbar" prefHeight="86.0" prefWidth="850.0" styleClass="nav_container" BorderPane.alignment="CENTER">
+        <VBox fx:id="tasks_btn" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <FontAwesomeIconView glyphName="ALIGN_JUSTIFY" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks" />
+        </VBox>
+        <VBox fx:id="flashcards_btn" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <FontAwesomeIconView glyphName="CLONE" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Flashcards" />
+        </VBox>
+        <VBox styleClass="focus_button" fx:id="focus_btn" layoutX="760.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0 " HBox.hgrow="ALWAYS">
+            <FontAwesomeIconView fx:id="focus_icon" glyphName="CLOCK_ALT" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Focus" />
+        </VBox>
+        <VBox fx:id="calendar_btn" layoutX="760.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <FontAwesomeIconView glyphName="CALENDAR_ALT" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Calendar" />
+        </VBox>
+        <VBox fx:id="settings_btn" layoutX="648.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <FontAwesomeIconView glyphName="GEAR" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
+        </VBox>
+    </HBox>

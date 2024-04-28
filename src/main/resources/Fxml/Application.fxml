@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+
+<BorderPane fx:id="client_parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="850.0" styleClass="pane"  xmlns="http://javafx.com/javafx/21" stylesheets="@../Styles/Application.css" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <fx:include source="NavBar.fxml"/>
+   </top>
+   <center>
+      <fx:include source="Focus.fxml"/>
+   </center>
+</BorderPane>
