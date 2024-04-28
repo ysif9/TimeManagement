@@ -15,4 +15,5 @@ module com.timemanagement.timemanagement {
     exports com.timemanagement;
     exports com.timemanagement.Controllers;
     exports com.timemanagement.Models;
+    exports com.timemanagement.Views;
 }

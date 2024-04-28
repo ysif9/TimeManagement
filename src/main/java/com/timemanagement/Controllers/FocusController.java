@@ -3,19 +3,15 @@ package com.timemanagement.Controllers;
 import atlantafx.base.controls.RingProgressIndicator;
 import com.timemanagement.Models.Task;
 import com.timemanagement.Views.TaskCellFactory;
-import javafx.animation.Animation;
-import javafx.animation.Transition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 

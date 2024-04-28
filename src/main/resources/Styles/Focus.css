@@ -69,10 +69,13 @@
     -fx-cursor: hand;
 }
 
-.todo_list ListView {
+.todo_list .list-view {
     -fx-border-width: 1 0 0 0;
     -fx-border-color: #3A3A3C;
     -fx-background-color: #0D1117;
+}
+.todo_list .list-cell {
+    -fx-background-color: transparent;
 }
 
 .todo_list ListView .scroll-bar:vertical {

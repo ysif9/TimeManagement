@@ -24,6 +24,7 @@ public class TaskCellController implements Initializable {
         task_checkbox.textProperty().bind(task.taskNameProperty());
         deadline_lbl.textProperty().bind(task.deadlineProperty().asString());
         task.completedProperty().bind(task_checkbox.selectedProperty());
+
     }
 
 

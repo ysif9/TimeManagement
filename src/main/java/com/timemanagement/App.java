@@ -3,7 +3,6 @@ package com.timemanagement;
 import atlantafx.base.theme.CupertinoDark;
 import com.timemanagement.Models.Model;
 import javafx.application.Application;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class App extends Application {

@@ -3,7 +3,6 @@ package com.timemanagement.Views;
 import com.timemanagement.Controllers.ApplicationController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
