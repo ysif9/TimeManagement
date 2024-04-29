@@ -1,7 +1,11 @@
 package com.timemanagement.Views;
 
+import atlantafx.base.controls.RingProgressIndicator;
 import com.timemanagement.Controllers.ApplicationController;
+import com.timemanagement.Controllers.FocusController;
+import com.timemanagement.Models.Model;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,7 +19,8 @@ public class ViewFactory {
     public VBox getFocusView() {
         if (focusView == null) {
             try {
-                focusView = new FXMLLoader(getClass().getResource("/Fxml/Focus.fxml")).load();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Focus.fxml"));
+                focusView = loader.load();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

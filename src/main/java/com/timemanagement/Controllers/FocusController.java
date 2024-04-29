@@ -3,12 +3,14 @@ package com.timemanagement.Controllers;
 import atlantafx.base.controls.RingProgressIndicator;
 import com.timemanagement.Models.Task;
 import com.timemanagement.Views.TaskCellFactory;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -22,6 +24,8 @@ public class FocusController implements Initializable {
     public RingProgressIndicator ring_progress;
     private final static int totalTimeInSeconds = 3000;
     public ListView<Task> tasks_listview;
+    private Thread timerThread;
+    private Stage stage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,11 +65,13 @@ public class FocusController implements Initializable {
                         "-fx-text-fill: #2F96FF;" +
                         "-fx-background-color: transparent;");
                 start_btn.setText("STOP");
+                startTimer();
             } else if (!start_btn.isSelected()) {
                 start_btn.setStyle(
                         "-fx-background-color: #0A84FF;" +
                         "-fx-effect: dropshadow(gaussian, #0F4B89, 0, 6, 0, 6);");
                 start_btn.setText("START");
+                stopTimer();
             }
         });
     }
@@ -77,6 +83,40 @@ public class FocusController implements Initializable {
         int seconds = (int) (timerInSeconds % 60);
 
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private void startTimer() {
+        if (stage == null) {
+            stage = (Stage) start_btn.getScene().getWindow();
+            stage.setOnCloseRequest(e -> stopTimer());
+        }
+        timerThread = new Thread(this::countdownTimer);
+        timerThread.start();
+    }
+
+    public void stopTimer() {
+        if (timerThread != null) {
+            timerThread.interrupt();
+            timerThread = null;
+            ring_progress.setProgress(1);
+        }
+
+    }
+
+    private void countdownTimer() {
+        for (int i = totalTimeInSeconds; i >= 0; i--) {
+            double percentage = (double) i / totalTimeInSeconds;
+            try {
+                Platform.runLater(() -> ring_progress.setProgress(percentage));
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(1000); // Sleep for 1 second
+            } catch (InterruptedException e) {
+                return;
+            }
+        }
     }
 
 }
