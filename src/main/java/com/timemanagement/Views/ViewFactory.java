@@ -1,11 +1,7 @@
 package com.timemanagement.Views;
 
-import atlantafx.base.controls.RingProgressIndicator;
 import com.timemanagement.Controllers.ApplicationController;
-import com.timemanagement.Controllers.FocusController;
-import com.timemanagement.Models.Model;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -55,7 +51,7 @@ public class ViewFactory {
         }
         Stage stage = new Stage();
         stage.setScene(scene);
-        //stage.setResizable(false);
+        stage.setResizable(false);
         stage.setTitle("Chronus");
         stage.show();
     }
