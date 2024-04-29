@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -32,6 +33,7 @@ public class FocusController implements Initializable {
 
         final ObservableList<Task> tasks = FXCollections.observableArrayList();
         tasks.add(new Task("Task1", LocalDate.of(2024, 6, 23)));
+        tasks.add(new Task("Task2", LocalDate.of(2024, 6, 23)));
         tasks_listview.setItems(tasks);
         tasks_listview.setCellFactory(e -> new TaskCellFactory());
 

@@ -11,7 +11,7 @@
 .pane {
     /*-fx-background-color: #010409;*/
     -fx-background-color: transparent;
-    -fx-spacing: 30;
+    -fx-spacing: 2;
     -fx-padding: 20 0 20 0;
     -fx-border-width: 0px;
 }
@@ -23,7 +23,7 @@
 }
 
 .todo_list {
-    -fx-padding: 20;
+    -fx-padding: 10 20 20 20;
     -fx-spacing: 2;
 }
 
@@ -76,6 +76,9 @@
 }
 .todo_list .list-cell {
     -fx-background-color: transparent;
+}
+.todo_list .list-cell:selected {
+    -fx-background-color: #0A84FF;
 }
 
 .todo_list ListView .scroll-bar:vertical {
