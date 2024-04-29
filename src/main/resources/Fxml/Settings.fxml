@@ -1,37 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
-
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
 <?import atlantafx.base.controls.ToggleSwitch?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -45,55 +13,54 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-      <GridPane fx:controller="com.timemanagement.Controllers.SettingsController" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <TextField fx:id="setName" prefHeight="32.0" prefWidth="146.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Label text="Name" GridPane.rowIndex="1" />
-            <Label text="Theme " GridPane.rowIndex="4" />
-            <Label text="Week start" GridPane.rowIndex="3" />
-            <Label text="Avatar" />
-            <ImageView fx:id="setImage" fitHeight="66.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
-               <image>
-                  <Image url="@../../../../../OneDrive/الصور/Picture2.jpg" />
-               </image>
-               <GridPane.margin>
-                  <Insets left="35.0" top="15.0" />
-               </GridPane.margin>
-            </ImageView>
-            <ToggleSwitch fx:id="setTheme" GridPane.columnIndex="3" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="50.0" />
-               </GridPane.margin>
-            </ToggleSwitch>
-            <ToggleSwitch fx:id="setNotifications" layoutX="495.0" layoutY="266.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets left="50.0" />
-               </GridPane.margin>
-            </ToggleSwitch>
-            <Label layoutX="10.0" layoutY="268.0" text="Notifications" GridPane.rowIndex="5" />
-            <Label layoutX="10.0" layoutY="287.0" text="Date of birth" GridPane.rowIndex="2" />
-            <DatePicker fx:id="setDate" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="setWeekStart" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-         </children>
-         <VBox.margin>
-            <Insets left="30.0" right="30.0" />
-         </VBox.margin>
-      </GridPane>
+<GridPane stylesheets="@../Styles/Settings.css" fx:controller="com.timemanagement.Controllers.SettingsController"
+          prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <VBox.margin>
+        <Insets left="30.0" right="30.0"/>
+    </VBox.margin>
+    <TextField fx:id="name_field" prefHeight="32.0" prefWidth="146.0" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+    <Label text="Name" GridPane.rowIndex="1"/>
+    <Label text="Theme " GridPane.rowIndex="4"/>
+    <Label text="Week start" GridPane.rowIndex="3"/>
+    <Label text="Avatar"/>
+    <ImageView fx:id="avatar_image" fitHeight="66.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true"
+               GridPane.columnIndex="3">
+        <GridPane.margin>
+            <Insets left="35.0" top="15.0"/>
+        </GridPane.margin>
+        <Image url="@../Images/logo3.png"/>
+    </ImageView>
+    <ToggleSwitch fx:id="theme_toggle" GridPane.columnIndex="3" GridPane.rowIndex="4">
+        <GridPane.margin>
+            <Insets left="50.0"/>
+        </GridPane.margin>
+    </ToggleSwitch>
+    <ToggleSwitch fx:id="notifications_toggle" layoutX="495.0" layoutY="266.0" GridPane.columnIndex="3"
+                  GridPane.rowIndex="5">
+        <padding>
+            <Insets left="50.0"/>
+        </padding>
+        <GridPane.margin>
+            <Insets left="50.0"/>
+        </GridPane.margin>
+    </ToggleSwitch>
+    <Label layoutX="10.0" layoutY="268.0" text="Notifications" GridPane.rowIndex="5"/>
+    <Label layoutX="10.0" layoutY="287.0" text="Date of birth" GridPane.rowIndex="2"/>
+    <DatePicker fx:id="date_picker" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+    <ChoiceBox fx:id="weekstart_cb" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+</GridPane>
 

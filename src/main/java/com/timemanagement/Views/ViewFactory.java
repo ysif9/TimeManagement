@@ -1,8 +1,12 @@
 package com.timemanagement.Views;
 
+import com.timemanagement.ChosenNavItem;
 import com.timemanagement.Controllers.ApplicationController;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,7 +16,15 @@ public class ViewFactory {
     private VBox focusView;
     private HBox navBarView;
     private GridPane settingsView;
+    private final ObjectProperty<ChosenNavItem> chosenNavItem;
 
+    public ViewFactory() {
+        this.chosenNavItem = new SimpleObjectProperty<>();
+    }
+
+    public ObjectProperty<ChosenNavItem> getChosenNavItem() {
+        return chosenNavItem;
+    }
 
     public GridPane getSettingsView() {
         if (settingsView == null) {
@@ -24,6 +36,10 @@ public class ViewFactory {
             }
         }
         return settingsView;
+    }
+
+    public void setCenterView() {
+
     }
 
     public VBox getFocusView() {
@@ -53,6 +69,7 @@ public class ViewFactory {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Application.fxml"));
         ApplicationController controller = new ApplicationController();
         fxmlLoader.setController(controller);
+        chosenNavItem.setValue(ChosenNavItem.FOCUS);
         createStage(fxmlLoader);
     }
 

@@ -9,6 +9,7 @@ module com.timemanagement.timemanagement {
     requires atlantafx.base;
     requires org.jetbrains.annotations;
     requires org.kordamp.ikonli.javafx;
+    //requires com.gluonhq.charm.glisten;
 
 
     opens com.timemanagement to javafx.fxml;

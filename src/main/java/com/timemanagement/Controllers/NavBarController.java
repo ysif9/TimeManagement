@@ -1,5 +1,7 @@
 package com.timemanagement.Controllers;
 
+import com.timemanagement.ChosenNavItem;
+import com.timemanagement.Models.Model;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -29,13 +31,31 @@ public class NavBarController implements Initializable {
             if (node instanceof VBox) {
                 node.setOnMouseEntered(e -> onHover((VBox) node));
                 node.setOnMouseExited(e -> onStoppedHover((VBox) node));
-                node.setOnMouseClicked(e -> onClicked((VBox) node));
             }
         }
+
+        tasks_btn.setOnMouseClicked(e -> setSelectedStyle(tasks_btn));
+        settings_btn.setOnMouseClicked(e -> onSettingsClicked());
+        calendar_btn.setOnMouseClicked(e ->setSelectedStyle(calendar_btn));
+        flashcards_btn.setOnMouseClicked(e ->setSelectedStyle(flashcards_btn));
+        focus_btn.setOnMouseClicked(e -> onFocusClicked());
         selected = focus_btn;
     }
 
-    private void resetClick() {
+
+    private void onSettingsClicked() {
+        setSelectedStyle(settings_btn);
+        Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.SETTINGS);
+    }
+
+    private void onFocusClicked() {
+        setSelectedStyle(focus_btn);
+        Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.FOCUS);
+
+
+    }
+
+    private void resetStyle() {
         if (selected != null) {
             selected.setStyle("-fx-border-color: #C9D1D9;");
             for (Node node : selected.getChildren()) {
@@ -47,9 +67,9 @@ public class NavBarController implements Initializable {
         }
     }
 
-    private void onClicked(VBox vBox) {
+    private void setSelectedStyle(VBox vBox) {
         if (selected != vBox){
-            resetClick();
+            resetStyle();
             selected = vBox;
             vBox.setStyle("-fx-border-color: #1F6FEBFF;");
             for (Node node : vBox.getChildren()) {
