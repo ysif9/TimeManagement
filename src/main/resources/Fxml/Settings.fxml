@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import atlantafx.base.controls.ToggleSwitch?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <GridPane stylesheets="@../Styles/Settings.css" fx:controller="com.timemanagement.Controllers.SettingsController"
           prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
@@ -33,10 +29,10 @@
         <Insets left="30.0" right="30.0"/>
     </VBox.margin>
     <TextField fx:id="name_field" prefHeight="32.0" prefWidth="146.0" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-    <Label text="Name" GridPane.rowIndex="1"/>
-    <Label text="Theme " GridPane.rowIndex="4"/>
-    <Label text="Week start" GridPane.rowIndex="3"/>
-    <Label text="Avatar"/>
+    <Text text="Name" GridPane.rowIndex="1"/>
+    <Text text="Theme " GridPane.rowIndex="4"/>
+    <Text text="Week start" GridPane.rowIndex="3"/>
+    <Text text="Avatar"/>
     <ImageView fx:id="avatar_image" fitHeight="66.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true"
                GridPane.columnIndex="3">
         <GridPane.margin>
@@ -58,8 +54,8 @@
             <Insets left="50.0"/>
         </GridPane.margin>
     </ToggleSwitch>
-    <Label layoutX="10.0" layoutY="268.0" text="Notifications" GridPane.rowIndex="5"/>
-    <Label layoutX="10.0" layoutY="287.0" text="Date of birth" GridPane.rowIndex="2"/>
+    <Text layoutX="10.0" layoutY="268.0" text="Notifications" GridPane.rowIndex="5"/>
+    <Text layoutX="10.0" layoutY="287.0" text="Date of birth" GridPane.rowIndex="2"/>
     <DatePicker fx:id="date_picker" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
     <ChoiceBox fx:id="weekstart_cb" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
 </GridPane>

@@ -51,8 +51,16 @@
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx-fontawesome</artifactId>
-            <version>4.7.0-9.1.2</version>
+            <version>4.7.0-9.1.2</version> <!-- Or the latest version -->
         </dependency>
+
+
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-feather-pack</artifactId>
+            <version>12.3.1</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.xerial</groupId>
@@ -78,7 +86,6 @@
             <artifactId>atlantafx-base</artifactId>
             <version>2.0.1</version>
         </dependency>
-
 
         <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
         <dependency>

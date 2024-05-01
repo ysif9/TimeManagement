@@ -6,4 +6,5 @@ public enum ChosenNavItem {
     FOCUS,
     CALENDAR,
     SETTINGS
+
 }

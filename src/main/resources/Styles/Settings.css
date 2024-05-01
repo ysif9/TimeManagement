@@ -3,3 +3,8 @@
 GridPane {
     -fx-padding: 50;
 }
+
+Text {
+    -fx-font-family: "Arial Rounded MT Bold";
+    -fx-font-size: 1.2em;
+}

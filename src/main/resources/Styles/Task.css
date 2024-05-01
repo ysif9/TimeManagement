@@ -1,17 +1,36 @@
 
 
+Label {
+    -fx-font-family: Inter;
+    -fx-font-size: 0.8em;
+}
+
 .checkbox {
-    -fx-label-padding: 0 0 0 10;
     -fx-text-alignment: center;
+}
+.checkbox > .box {
+    -fx-padding: 5px;
 }
 
 .container {
-    -fx-padding: 0 0 0 20;
-    -fx-spacing: 200;
+    -fx-padding: 5;
     -fx-font-size: 1.5em;
     -fx-background-color: transparent;
 }
 
+.child-container-2 {
+    -fx-spacing: 30;
+    -fx-padding: 0 0 0 200;
+}
+
+.child-container-1 {
+    -fx-spacing: 5;
+}
+
 .date_lbl {
     -fx-text-fill: #AEAEB2;
+}
+
+FontAwesomeIconView {
+    -fx-fill: #AEAEB2;
 }

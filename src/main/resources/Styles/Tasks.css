@@ -1,0 +1,73 @@
+
+
+
+VBox {
+    -fx-padding: 20;
+    -fx-spacing: 10;
+}
+Accordion {
+    -fx-border-width: 0;
+}
+.accordion .titled-pane > *.content{
+    -fx-background-color: #0D1117;
+    -fx-border-width: 0;
+}
+
+.accordion .titled-pane .title {
+    -fx-background-color:  #0D1117;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #3A3A3C;
+    -fx-font-family: Inter Semibold;
+    -fx-font-weight: 700;
+}
+.accordion .titled-pane .list-view {
+    -fx-background-color: #0D1117;
+}
+
+
+
+.accordion .titled-pane .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 15 0;
+}
+
+.accordion .titled-pane .list-cell:selected {
+    -fx-background-color: #0A84FF;
+}
+
+.accordion .titled-pane .list-cell:empty {
+-fx-opacity: 0;
+}
+
+.accordion .titled-pane ListView .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+
+ListView {
+    -fx-border-width: 0px;
+}
+
+
+
+.newTask VBox {
+    -fx-padding: 10;
+}
+
+.newTask Text {
+    -fx-font-family: Inter;
+    -fx-font-weight: bold;
+    -fx-font-size: 1em;
+}
+.newTask Button {
+    -fx-font-family: Inter;
+    -fx-font-weight: bold;
+    -fx-font-size: 1em;
+}
+
+.newTask TextField {
+    -fx-font-family: Inter;
+}
+.newTask DatePicker {
+    -fx-font-family: Inter;
+}

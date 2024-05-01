@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 
-
-<HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="500.0" styleClass="container"
-      stylesheets="@../Styles/Task.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <CheckBox fx:id="task_checkbox" mnemonicParsing="false" styleClass="checkbox" text="CheckBox"/>
-   <Label fx:id="deadline_lbl" styleClass="date_lbl" text="Label"/>
-</HBox>
+<HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="730.0" styleClass="container" stylesheets="@../Styles/Task.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="child-container-1"
+          HBox.hgrow="ALWAYS">
+        <CheckBox fx:id="task_checkbox" mnemonicParsing="false" prefHeight="32.0" prefWidth="43.0"
+                  styleClass="checkbox"/>
+        <Label fx:id="task_lbl" text="sURVEY FOR AIRPARK 32 ON THE HIGHWAY"/>
+    </HBox>
+    <HBox fx:id="info_box" alignment="CENTER_LEFT" layoutX="30.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0"
+          styleClass="child-container-2" HBox.hgrow="ALWAYS">
+        <Label prefHeight="31.0" prefWidth="40.0" styleClass="date_lbl" text="2h"/>
+        <Label fx:id="deadline_lbl" styleClass="date_lbl" text="Today 2pm">
+            <graphic>
+                <FontAwesomeIconView glyphName="CALENDAR_ALT" size="23"/>
+            </graphic>
+        </Label>
+    </HBox>
+   </HBox>

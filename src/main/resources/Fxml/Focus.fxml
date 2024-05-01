@@ -10,13 +10,11 @@
 <?import javafx.scene.text.Text?>
 
 <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="850.0" styleClass="pane" stylesheets="@../Styles/Focus.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.timemanagement.Controllers.FocusController">
-    <VBox alignment="TOP_CENTER" layoutX="175.0" layoutY="55.0" spacing="10.0" styleClass="container" VBox.vgrow="ALWAYS">
+    <VBox alignment="TOP_CENTER" layoutX="175.0" layoutY="55.0" styleClass="container" VBox.vgrow="ALWAYS">
         <HBox alignment="CENTER" prefHeight="42.0" prefWidth="848.0">
             <ToggleButtonGroup prefHeight="32.0" prefWidth="98.0" selectionType="SINGLE">
-                <ToggleButton fx:id="left_btn" prefHeight="32.0" prefWidth="81.0" styleClass="toggle_button"
-                              selected="true" text="Focus" textFill="WHITE"/>
-                <ToggleButton fx:id="right_btn" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="83.0"
-                               styleClass="toggle_button" text="Break" textAlignment="CENTER"/>
+                <ToggleButton fx:id="left_btn" prefHeight="32.0" prefWidth="81.0" selected="true" styleClass="toggle_button" text="Focus" textFill="WHITE" />
+                <ToggleButton fx:id="right_btn" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="83.0" styleClass="toggle_button" text="Break" textAlignment="CENTER" />
             </ToggleButtonGroup>
         </HBox>
       <RingProgressIndicator fx:id="ring_progress" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="248.0" prefWidth="250.0" progress="1.0" styleClass="ring_progress">
@@ -25,11 +23,14 @@
          </VBox.margin></RingProgressIndicator>
         <ToggleButton fx:id="start_btn" mnemonicParsing="false" styleClass="start_btn" text="START">
          <VBox.margin>
-            <Insets bottom="15.0" />
+            <Insets bottom="20.0" top="40.0" />
          </VBox.margin></ToggleButton>
     </VBox>
     <VBox prefHeight="230.0" prefWidth="600.0" styleClass="todo_list" VBox.vgrow="ALWAYS">
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks:"/>
-        <ListView fx:id="tasks_listview" prefHeight="200.0" prefWidth="200.0"/>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks:">
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin></Text>
+        <ListView fx:id="tasks_listview" prefHeight="200.0" prefWidth="200.0" />
     </VBox>
 </VBox>

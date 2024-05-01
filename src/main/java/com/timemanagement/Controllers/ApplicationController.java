@@ -17,6 +17,7 @@ public class ApplicationController implements Initializable {
         Model.getInstance().getViewFactory().getChosenNavItem().addListener((observable, oldValue, newValue) -> {
             switch (newValue) {
                 case SETTINGS -> client_parent.setCenter(Model.getInstance().getViewFactory().getSettingsView());
+                case TASKS -> client_parent.setCenter(Model.getInstance().getViewFactory().getTasksView());
                 default -> client_parent.setCenter(Model.getInstance().getViewFactory().getFocusView());
             }
         });

@@ -2,20 +2,15 @@ package com.timemanagement.Controllers;
 
 import atlantafx.base.controls.RingProgressIndicator;
 import com.timemanagement.Models.Task;
-import com.timemanagement.Views.TaskCellFactory;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class FocusController implements Initializable {
@@ -31,11 +26,11 @@ public class FocusController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        final ObservableList<Task> tasks = FXCollections.observableArrayList();
-        tasks.add(new Task("Task1", LocalDate.of(2024, 6, 23)));
-        tasks.add(new Task("Task2", LocalDate.of(2024, 6, 23)));
-        tasks_listview.setItems(tasks);
-        tasks_listview.setCellFactory(e -> new TaskCellFactory());
+//        final ObservableList<Task> tasks = FXCollections.observableArrayList();
+//        tasks.add(new Task("Task1", LocalDate.of(2024, 6, 23)));
+//        tasks.add(new Task("Task2", LocalDate.of(2024, 6, 23)));
+//        tasks_listview.setItems(tasks);
+//        tasks_listview.setCellFactory(e -> new TaskCellFactory());
 
         //turn progress to string
         ring_progress.setStringConverter(new StringConverter<>() {

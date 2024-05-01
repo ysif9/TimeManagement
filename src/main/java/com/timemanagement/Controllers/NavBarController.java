@@ -34,7 +34,7 @@ public class NavBarController implements Initializable {
             }
         }
 
-        tasks_btn.setOnMouseClicked(e -> setSelectedStyle(tasks_btn));
+        tasks_btn.setOnMouseClicked(e -> onTasksClicked());
         settings_btn.setOnMouseClicked(e -> onSettingsClicked());
         calendar_btn.setOnMouseClicked(e ->setSelectedStyle(calendar_btn));
         flashcards_btn.setOnMouseClicked(e ->setSelectedStyle(flashcards_btn));
@@ -42,6 +42,11 @@ public class NavBarController implements Initializable {
         selected = focus_btn;
     }
 
+
+    private void onTasksClicked() {
+        setSelectedStyle(tasks_btn);
+        Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.TASKS);
+    }
 
     private void onSettingsClicked() {
         setSelectedStyle(settings_btn);
