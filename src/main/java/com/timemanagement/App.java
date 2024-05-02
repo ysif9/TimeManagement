@@ -1,6 +1,8 @@
 package com.timemanagement;
 
 import atlantafx.base.theme.CupertinoDark;
+import atlantafx.base.theme.CupertinoLight;
+
 import com.timemanagement.Models.Model;
 import javafx.application.Application;
 import javafx.scene.text.Font;
@@ -16,6 +18,13 @@ public class App extends Application {
         Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
 
         Model.getInstance().getViewFactory().showApplication();
+        Model.getInstance().getThemeProperty().addListener((obs, oldValue, newValue) -> {
+           if (newValue == Theme.DARK) {
+               Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+           } else if (newValue == Theme.LIGHT) {
+               Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+           }
+        });
     }
 
 }

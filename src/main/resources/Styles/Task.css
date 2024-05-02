@@ -3,6 +3,7 @@
 Label {
     -fx-font-family: Inter;
     -fx-font-size: 0.8em;
+    -fx-text-fill: -color-fg-default;
 }
 
 .checkbox {
@@ -19,7 +20,7 @@ Label {
 }
 
 .child-container-2 {
-    -fx-spacing: 30;
+    -fx-spacing: 20;
     -fx-padding: 0 0 0 200;
 }
 
@@ -28,9 +29,9 @@ Label {
 }
 
 .date_lbl {
-    -fx-text-fill: #AEAEB2;
+    -fx-text-fill: -color-fg-muted;
 }
 
 FontAwesomeIconView {
-    -fx-fill: #AEAEB2;
+    -fx-fill: -color-fg-muted;
 }

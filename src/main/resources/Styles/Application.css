@@ -1,6 +1,6 @@
 
 BorderPane {
-    -fx-background-color: #0D1117;
+    -fx-background-color: -color-bg-default;
     /*-fx-background-color: #111D25;*/
     -fx-padding: 0 0 10 0;
 }

@@ -25,23 +25,24 @@ public class NavBarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setHoverLogic();
 
+        tasks_btn.setOnMouseClicked(e -> onTasksClicked());
+        settings_btn.setOnMouseClicked(e -> onSettingsClicked());
+        calendar_btn.setOnMouseClicked(e -> onCalendarClicked());
+        flashcards_btn.setOnMouseClicked(e -> onFlashcardsClicked());
+        focus_btn.setOnMouseClicked(e -> onFocusClicked());
+        selected = focus_btn;
+    }
 
+    private void setHoverLogic() {
         for (Node node : navbar.getChildren()) {
             if (node instanceof VBox) {
                 node.setOnMouseEntered(e -> onHover((VBox) node));
                 node.setOnMouseExited(e -> onStoppedHover((VBox) node));
             }
         }
-
-        tasks_btn.setOnMouseClicked(e -> onTasksClicked());
-        settings_btn.setOnMouseClicked(e -> onSettingsClicked());
-        calendar_btn.setOnMouseClicked(e ->setSelectedStyle(calendar_btn));
-        flashcards_btn.setOnMouseClicked(e ->setSelectedStyle(flashcards_btn));
-        focus_btn.setOnMouseClicked(e -> onFocusClicked());
-        selected = focus_btn;
     }
-
 
     private void onTasksClicked() {
         setSelectedStyle(tasks_btn);
@@ -56,32 +57,42 @@ public class NavBarController implements Initializable {
     private void onFocusClicked() {
         setSelectedStyle(focus_btn);
         Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.FOCUS);
-
-
     }
 
-    private void resetStyle() {
-        if (selected != null) {
-            selected.setStyle("-fx-border-color: #C9D1D9;");
-            for (Node node : selected.getChildren()) {
-                if (node instanceof Text) {
-                    node.setStyle("-fx-fill: #C9D1D9;");
-                }
-            }
-            selected = null;
-        }
+    private void onFlashcardsClicked() {
+        setSelectedStyle(flashcards_btn);
+        Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.FLASHCARDS);
     }
+
+    private void onCalendarClicked() {
+        setSelectedStyle(calendar_btn);
+        Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.CALENDAR);
+    }
+
+
 
     private void setSelectedStyle(VBox vBox) {
         if (selected != vBox){
             resetStyle();
             selected = vBox;
-            vBox.setStyle("-fx-border-color: #1F6FEBFF;");
+            vBox.setStyle("-fx-border-color: -color-accent-emphasis;");
             for (Node node : vBox.getChildren()) {
                 if (node instanceof Text) {
-                    node.setStyle("-fx-fill: #1F6FEBFF;");
+                    node.setStyle("-fx-fill: -color-accent-emphasis;");
                 }
             }
+        }
+    }
+
+    private void resetStyle() {
+        if (selected != null) {
+            selected.setStyle("-fx-border-color: -color-fg-muted;");
+            for (Node node : selected.getChildren()) {
+                if (node instanceof Text) {
+                    node.setStyle("-fx-fill: -color-fg-muted;");
+                }
+            }
+            selected = null;
         }
     }
 
@@ -89,7 +100,7 @@ public class NavBarController implements Initializable {
         if (selected == vBox) {return;}
         for (Node node : vBox.getChildren()) {
             if (node instanceof Text) {
-                node.setStyle("-fx-fill: #1F6FEBFF;");
+                node.setStyle("-fx-fill: -color-accent-emphasis;");
             }
         }
 
@@ -99,7 +110,7 @@ public class NavBarController implements Initializable {
         if (selected == vBox) {return;}
         for (Node node : vBox.getChildren()) {
             if (node instanceof Text) {
-                node.setStyle("-fx-fill: #C9D1D9;");
+                node.setStyle("-fx-fill: -color-fg-muted;");
             }
         }
     }

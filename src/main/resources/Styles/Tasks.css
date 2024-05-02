@@ -9,34 +9,39 @@ Accordion {
     -fx-border-width: 0;
 }
 .accordion .titled-pane > *.content{
-    -fx-background-color: #0D1117;
+    -fx-background-color: -color-bg-default;
     -fx-border-width: 0;
 }
 
 .accordion .titled-pane .title {
-    -fx-background-color:  #0D1117;
+    -fx-background-color:  -color-bg-default;
     -fx-border-width: 0 0 1 0;
-    -fx-border-color: #3A3A3C;
+    -fx-border-color: -color-border-default;
     -fx-font-family: Inter Semibold;
     -fx-font-weight: 700;
 }
 .accordion .titled-pane .list-view {
-    -fx-background-color: #0D1117;
+    -fx-background-color: -color-bg-default;
 }
-
+.text-field {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
 
 
 .accordion .titled-pane .list-cell {
     -fx-background-color: transparent;
-    -fx-padding: 0 0 15 0;
-}
-
-.accordion .titled-pane .list-cell:selected {
-    -fx-background-color: #0A84FF;
+    -fx-padding: 5 0 5 0;
 }
 
 .accordion .titled-pane .list-cell:empty {
 -fx-opacity: 0;
+}
+.accordion .titled-pane .list-cell:selected {
+    -fx-background-color: -color-accent-subtle;
 }
 
 .accordion .titled-pane ListView .scroll-bar:vertical {
@@ -50,15 +55,6 @@ ListView {
 
 
 
-.newTask VBox {
-    -fx-padding: 10;
-}
-
-.newTask Text {
-    -fx-font-family: Inter;
-    -fx-font-weight: bold;
-    -fx-font-size: 1em;
-}
 .newTask Button {
     -fx-font-family: Inter;
     -fx-font-weight: bold;
@@ -67,7 +63,5 @@ ListView {
 
 .newTask TextField {
     -fx-font-family: Inter;
-}
-.newTask DatePicker {
-    -fx-font-family: Inter;
+    -fx-font-size: 1.5em;
 }

@@ -1,8 +1,8 @@
 .pane VBox {
-    -fx-background-color: #0D1117;
+    -fx-background-color: -color-bg-overlay;
     -fx-background-radius: 6px;
 
-    -fx-border-color: #23272D;
+    -fx-border-color: -color-border-default;
     -fx-border-width: 0px;
     -fx-border-radius: 5px;
     -fx-pref-width: 800;
@@ -34,15 +34,15 @@
     -fx-padding: 0px 12px;
     -fx-border-radius: 4px;
     -fx-background-radius: 4px;
-    -fx-background-color: #0A84FF;
-    -fx-border-color: #2F96FF;
+    -fx-background-color: -color-accent-emphasis;
+    -fx-border-color: -color-accent-fg;
     -fx-font-family: "Arial Rounded";
     -fx-font-size: 22px;
     -fx-pref-height: 55px;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -color-fg-emphasis;
     -fx-font-weight: bold;
     -fx-pref-width: 200px;
-    -fx-effect: dropshadow(gaussian, #0F4B89, 0, 6, 0, 6);
+    -fx-effect: dropshadow(gaussian, -color-accent-muted, 0, 6, 0, 6);
     -fx-transition: color 0.5s;
 }
 
@@ -69,26 +69,26 @@
     -fx-cursor: hand;
 }
 
-.todo_list .list-view {
-    -fx-border-width: 1 0 0 0;
-    -fx-border-color: #3A3A3C;
-    -fx-background-color: #0D1117;
-}
-.todo_list .list-cell {
-    -fx-background-color: transparent;
-}
-.todo_list .list-cell:selected {
-    -fx-background-color: #0A84FF;
-}
+/*.todo_list .list-view {*/
+/*    -fx-border-width: 1 0 0 0;*/
+/*    -fx-border-color: -color-border-default;*/
+/*    -fx-background-color: -color-bg-default;*/
+/*}*/
+/*.todo_list .list-cell {*/
+/*    -fx-background-color: transparent;*/
+/*}*/
+/*.todo_list .list-cell:selected {*/
+/*    -fx-background-color: #0A84FF;*/
+/*}*/
 
-.todo_list ListView .scroll-bar:vertical {
-    -fx-scale-x: 0;
-}
+/*.todo_list ListView .scroll-bar:vertical {*/
+/*    -fx-scale-x: 0;*/
+/*}*/
 
-.todo_list Text {
-    -fx-font-family: "Arial Rounded";
-    -fx-font-weight: 500;
-    -fx-font-size: 2em;
-    -fx-fill: white;
+/*.todo_list Text {*/
+/*    -fx-font-family: "Arial Rounded";*/
+/*    -fx-font-weight: 500;*/
+/*    -fx-font-size: 2em;*/
+/*    -fx-fill: white;*/
 
-}
+/*}*/

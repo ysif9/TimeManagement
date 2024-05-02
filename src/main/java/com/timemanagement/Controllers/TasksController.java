@@ -1,20 +1,25 @@
 package com.timemanagement.Controllers;
 
-import com.timemanagement.Models.NoSelectionModel;
+import atlantafx.base.controls.Calendar;
+import atlantafx.base.controls.CustomTextField;
+import atlantafx.base.controls.Popover;
+import atlantafx.base.controls.Spacer;
+import atlantafx.base.theme.Tweaks;
 import com.timemanagement.Models.Task;
 import com.timemanagement.Views.TaskCellFactory;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.StringConverter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class TasksController implements Initializable {
@@ -24,81 +29,82 @@ public class TasksController implements Initializable {
     public Accordion accordion;
     public TitledPane today_pane;
     public VBox parent_vbox;
-    public TextField task_field;
-    public DatePicker deadline_dp;
-    public Button newtask_btn;
+
 
     private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+    public HBox toolbar_newtask;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setButtonStyle();
-        deadline_dp.setConverter(changeDateFormat());
+        newTaskSetup();
+        listviewSetup();
+    }
 
-        deadline_dp.setDayCellFactory(picker -> disablePastDates());
 
-        // disable mouse selection of tasks in listview
-        today_listview.setSelectionModel(new NoSelectionModel<>());
-        completed_listview.setSelectionModel(new NoSelectionModel<>());
-        upcoming_listview.setSelectionModel(new NoSelectionModel<>());
+    private void listviewSetup() {
+        double maxHeight = 500;
+
+        today_listview.prefHeightProperty().bind(
+                Bindings.when(Bindings.size(tasks).multiply(50).add(20).lessThan(maxHeight))
+                        .then(Bindings.size(tasks).multiply(50).add(20))
+                        .otherwise(maxHeight)
+        );
+        upcoming_listview.maxHeightProperty().bind(Bindings.size(tasks).multiply(70));
+        completed_listview.maxHeightProperty().bind(Bindings.size(tasks).multiply(70));
 
         today_listview.setItems(tasks);
         today_listview.setCellFactory(e -> new TaskCellFactory());
-
-        newtask_btn.setOnMouseClicked(e -> onCreateTask());
     }
 
-    private void setButtonStyle() {
-        var icon = new FontIcon(Feather.PLUS);
-        newtask_btn.getStyleClass().addAll(
-                Styles.ACCENT, Styles.BUTTON_OUTLINED
-        );
-        newtask_btn.setGraphic(icon);
-    }
+    private void newTaskSetup() {
 
-    private StringConverter<LocalDate> changeDateFormat() {
-       return new StringConverter<>() {
-            private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        toolbar_newtask.setStyle("-fx-border-width: 1px; -fx-border-color: -color-border-default;");
 
-            @Override
-            public String toString(LocalDate date) {
-                if (date != null) {
-                    return dateFormatter.format(date);
-                } else {
-                    return "";
-                }
+        var textField = new CustomTextField();
+        textField.setPromptText("What are you working on?");
+        textField.setPrefWidth(500);
+        textField.setFocusTraversable(false);
+
+        var cal = new Calendar(LocalDate.now());
+        cal.setDayCellFactory(c -> new FutureDateCell());
+        cal.getStyleClass().add(Tweaks.EDGE_TO_EDGE);
+        cal.setValue(null);
+
+
+        var pop2 = new Popover(cal);
+        pop2.setHeaderAlwaysVisible(false);
+        pop2.setDetachable(false);
+        pop2.setArrowLocation(Popover.ArrowLocation.TOP_LEFT);
+
+
+
+        var datePickerButton = new Button(null, new FontIcon(Feather.CALENDAR));
+        datePickerButton.setOnMouseClicked(e -> pop2.show(datePickerButton));
+        datePickerButton.getStyleClass().add(Styles.FLAT);
+        var newTaskBtn = new Button("Add Task", new FontIcon(Feather.PLUS));
+        newTaskBtn.getStyleClass().add(Styles.ACCENT);
+
+        toolbar_newtask.setAlignment(Pos.CENTER_LEFT);
+        toolbar_newtask.getChildren().addAll(textField, new Spacer(120), datePickerButton, new Spacer(10), newTaskBtn);
+
+        newTaskBtn.setOnMouseClicked(e -> {
+            if (!textField.getText().isEmpty() && cal.getValue() != null ) {
+                Task task = new Task(textField.getText(), cal.getValue(), "00:00");
+                tasks.add(task);
+                textField.setText("");
+                cal.setValue(null);
             }
+        });
 
-            @Override
-            public LocalDate fromString(String s) {
-                return LocalDate.parse(s, dateFormatter);
-            }
-        };
     }
 
-    private DateCell disablePastDates() {
-        return new DateCell() {
-            @Override
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
+    static class FutureDateCell extends DateCell {
 
-
-                if (date.isBefore(LocalDate.now())) {
-                    setDisable(true);
-                    setStyle("-fx-background-color: #3A3A3C;");
-                }
-            }
-        };
-    }
-
-    private void onCreateTask() {
-        if (!task_field.getText().isEmpty() && deadline_dp.getValue() != null ) {
-            Task task = new Task(task_field.getText(), deadline_dp.getValue());
-            tasks.add(task);
-            task_field.setText("");
-            deadline_dp.setValue(null);
+        @Override
+        public void updateItem(LocalDate date, boolean empty) {
+            super.updateItem(date, empty);
+            setDisable(empty || date.isBefore(LocalDate.now()));
         }
     }
-
 }

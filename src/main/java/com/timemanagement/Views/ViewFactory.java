@@ -18,6 +18,7 @@ public class ViewFactory {
     private GridPane settingsView;
     private final ObjectProperty<ChosenNavItem> chosenNavItem;
 
+
     public ViewFactory() {
         this.chosenNavItem = new SimpleObjectProperty<>();
     }
@@ -62,6 +63,7 @@ public class ViewFactory {
         return focusView;
     }
 
+
     public HBox getNavBarView() {
         if (navBarView == null) {
             try {
@@ -85,13 +87,15 @@ public class ViewFactory {
         Scene scene;
         try {
             scene = new Scene(fxmlLoader.load());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
+         catch (Exception e) {
+             throw new RuntimeException(e);
+         }
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Chronus");
         stage.show();
+        stage.setOnCloseRequest(e -> System.exit(0));
     }
 }

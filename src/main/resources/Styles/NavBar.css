@@ -7,7 +7,7 @@
     -fx-border-style: solid;
     /*-fx-background-color: #0D1117;*/
     /*-fx-border-color: #999EA1;*/
-    -fx-border-color: #C9D1D9;
+    -fx-border-color: -color-fg-muted;
     -fx-padding: 0 0 7 0;
 }
 
@@ -21,26 +21,26 @@
 .nav_container FontAwesomeIconView {
     -glyph-size: 20px;
     /*-fx-fill: #999EA1;*/
-    -fx-fill: #C9D1D9;
+    -fx-fill: -color-fg-muted;
 }
 
 .nav_container Text {
     -fx-font-family: "Arial Rounded MT Bold";
     -fx-font-size: 1.2em;
     /*-fx-fill: #999EA1;*/
-    -fx-fill: #C9D1D9;
+    -fx-fill: -color-fg-muted;
     -fx-font-weight: bold;
 }
 
 .focus_button {
-    -fx-border-color: #1F6FEBFF;
+    -fx-border-color: -color-accent-emphasis;
 }
 
 .focus_button FontAwesomeIconView {
-    -fx-fill: #1F6FEBFF;
+    -fx-fill: -color-accent-emphasis;
 }
 
 .focus_button Text {
-    -fx-fill: #1F6FEBFF;
+    -fx-fill: -color-accent-emphasis;
 
 }
