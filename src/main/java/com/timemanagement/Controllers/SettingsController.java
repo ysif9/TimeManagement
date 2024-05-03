@@ -4,7 +4,7 @@ import atlantafx.base.controls.ProgressSliderSkin;
 import atlantafx.base.controls.ToggleSwitch;
 import com.timemanagement.Models.Model;
 import com.timemanagement.Theme;
-import javafx.application.Application;
+
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;

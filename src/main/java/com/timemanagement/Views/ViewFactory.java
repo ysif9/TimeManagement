@@ -18,6 +18,7 @@ public class ViewFactory {
     private HBox navBarView;
     private VBox tasksView;
     private AnchorPane settingsView;
+    private VBox calenderView;
     private final ObjectProperty<ChosenNavItem> chosenNavItem;
 
 
@@ -63,6 +64,17 @@ public class ViewFactory {
             }
         }
         return focusView;
+    }
+    public VBox getCalenderView() {
+        if (calenderView == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Calendar.fxml"));
+                calenderView = loader.load();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return calenderView;
     }
 
 
