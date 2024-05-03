@@ -52,4 +52,5 @@ break_time_slider.setMin(5);
         });;
 
     }
+
 }
