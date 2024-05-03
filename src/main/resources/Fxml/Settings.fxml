@@ -24,7 +24,7 @@
    <ToggleSwitch fx:id="theme_toggle" alignment="CENTER_RIGHT" labelPosition="RIGHT" layoutX="590.0" layoutY="432.0" AnchorPane.topAnchor="435.0" />
    <ToggleSwitch fx:id="notifications_toggle" layoutX="590.0" layoutY="551.0" AnchorPane.topAnchor="540.0" />
    <Label fx:id="focus_time_lbl" layoutX="717.0" layoutY="215.0" text="50" />
-   <Label fx:id="break_time_lbl" layoutX="717.0" layoutY="325.0" text="0" />
+   <Label fx:id="break_time_lbl" layoutX="717.0" layoutY="325.0" text="10" />
    <Text layoutX="74.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Avatar" AnchorPane.leftAnchor="74.0" />
    <ImageView fx:id="avatar_image" fitHeight="98.0" fitWidth="120.0" layoutX="553.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
       <image>

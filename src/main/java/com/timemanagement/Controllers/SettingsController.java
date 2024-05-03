@@ -1,5 +1,6 @@
 package com.timemanagement.Controllers;
 
+import atlantafx.base.controls.ProgressSliderSkin;
 import atlantafx.base.controls.ToggleSwitch;
 import com.timemanagement.Models.Model;
 import com.timemanagement.Theme;
@@ -23,6 +24,13 @@ public class SettingsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //initialization
+        focus_time_slider.setValue(50);
+        break_time_slider.setValue(10);
+        focus_time_slider.setSkin(new ProgressSliderSkin(focus_time_slider));
+        break_time_slider.setSkin(new ProgressSliderSkin(break_time_slider));
+
+        //theme switch
         theme_toggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 Model.getInstance().getThemeProperty().set(Theme.LIGHT);
@@ -30,7 +38,8 @@ public class SettingsController implements Initializable {
                 Model.getInstance().getThemeProperty().set(Theme.DARK);
             }
         });
-        focus_time_slider.setValue(5000/60);
+
+        //sliders listeners
         focus_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
            focus_time_lbl.setText(String.valueOf(((int)focus_time_slider.getValue()*60 /100)));
 
