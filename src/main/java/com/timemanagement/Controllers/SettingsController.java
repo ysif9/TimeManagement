@@ -5,9 +5,7 @@ import com.timemanagement.Models.Model;
 import com.timemanagement.Theme;
 import javafx.application.Application;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
@@ -17,9 +15,11 @@ public class SettingsController implements Initializable {
     public ImageView avatar_image;
     public ToggleSwitch theme_toggle;
     public ToggleSwitch notifications_toggle;
-    public DatePicker date_picker;
-    public ChoiceBox weekstart_cb;
-    public TextField name_field;
+    public Slider focus_time_slider;
+    public Slider break_time_slider;
+    public Label focus_time_lbl;
+    public Label break_time_lbl;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,5 +30,14 @@ public class SettingsController implements Initializable {
                 Model.getInstance().getThemeProperty().set(Theme.DARK);
             }
         });
+        focus_time_slider.setValue(5000/60);
+        focus_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
+           focus_time_lbl.setText(String.valueOf(((int)focus_time_slider.getValue()*60 /100)));
+
+        });;
+        break_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
+            break_time_lbl.setText(String.valueOf(((int)break_time_slider.getValue() *60 /100)));
+        });;
+
     }
 }

@@ -145,4 +145,5 @@ public class FocusController implements Initializable {
         task_vbox.setAlignment(Pos.CENTER_LEFT);
         task_vbox.getChildren().addAll(aPane, timeLabel);
     }
+
 }

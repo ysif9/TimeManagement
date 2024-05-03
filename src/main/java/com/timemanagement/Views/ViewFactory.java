@@ -6,6 +6,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,7 +17,7 @@ public class ViewFactory {
     private VBox focusView;
     private HBox navBarView;
     private VBox tasksView;
-    private GridPane settingsView;
+    private AnchorPane settingsView;
     private final ObjectProperty<ChosenNavItem> chosenNavItem;
 
 
@@ -27,7 +29,7 @@ public class ViewFactory {
         return chosenNavItem;
     }
 
-    public GridPane getSettingsView() {
+    public AnchorPane getSettingsView() {
         if (settingsView == null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Settings.fxml"));
@@ -95,7 +97,10 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Chronus");
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/logo3.png"))));
         stage.show();
         stage.setOnCloseRequest(e -> System.exit(0));
     }
+
+
 }
