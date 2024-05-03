@@ -31,7 +31,8 @@ public class SettingsController implements Initializable {
 
 focus_time_slider.setMin(5);
 break_time_slider.setMin(5);
-
+break_time_slider.setMax(60);
+focus_time_slider.setMax(60);
 
         //theme switch
         theme_toggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -43,13 +44,10 @@ break_time_slider.setMin(5);
         });
 
         //sliders listeners
-        focus_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
-           focus_time_lbl.setText(String.valueOf(((int)focus_time_slider.getValue()*60 /100)));
-
-        });;
-        break_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
-            break_time_lbl.setText(String.valueOf(((int)break_time_slider.getValue() *60 /100)));
-        });;
+        focus_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) ->
+                focus_time_lbl.setText(String.valueOf(((int)focus_time_slider.getValue() ))));
+        break_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) ->
+                break_time_lbl.setText(String.valueOf(((int)break_time_slider.getValue() ))));
 
     }
 
