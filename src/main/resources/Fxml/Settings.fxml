@@ -15,12 +15,12 @@
    <Text layoutX="73.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Break Time" AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="325.0" />
    <Text layoutX="73.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Theme" AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="435.0" />
    <Text layoutX="73.0" layoutY="569.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Text" text="Notifications" AnchorPane.leftAnchor="73.0" AnchorPane.topAnchor="540.0" />
-   <Slider fx:id="focus_time_slider" layoutX="493.0" layoutY="215.0" prefHeight="20.0" prefWidth="217.0" AnchorPane.rightAnchor="139.0">
+   <Slider fx:id="focus_time_slider" layoutX="493.0" layoutY="215.0" max="60.0" prefHeight="20.0" prefWidth="217.0" value="50.0" AnchorPane.rightAnchor="139.0">
       <effect>
          <ColorAdjust />
       </effect>
    </Slider>
-   <Slider fx:id="break_time_slider" layoutX="493.0" layoutY="325.0" prefHeight="20.0" prefWidth="217.0" AnchorPane.rightAnchor="139.0" AnchorPane.topAnchor="325.0" />
+   <Slider fx:id="break_time_slider" layoutX="493.0" layoutY="325.0" max="60.0" prefHeight="20.0" prefWidth="217.0" value="10.0" AnchorPane.rightAnchor="139.0" AnchorPane.topAnchor="325.0" />
    <ToggleSwitch fx:id="theme_toggle" alignment="CENTER_RIGHT" labelPosition="RIGHT" layoutX="590.0" layoutY="432.0" AnchorPane.topAnchor="435.0" />
    <ToggleSwitch fx:id="notifications_toggle" layoutX="590.0" layoutY="551.0" AnchorPane.topAnchor="540.0" />
    <Label fx:id="focus_time_lbl" layoutX="717.0" layoutY="215.0" text="50" />

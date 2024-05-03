@@ -25,10 +25,13 @@ public class SettingsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //initialization
-        focus_time_slider.setValue(50);
-        break_time_slider.setValue(10);
+
         focus_time_slider.setSkin(new ProgressSliderSkin(focus_time_slider));
         break_time_slider.setSkin(new ProgressSliderSkin(break_time_slider));
+
+focus_time_slider.setMin(5);
+break_time_slider.setMin(5);
+
 
         //theme switch
         theme_toggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
