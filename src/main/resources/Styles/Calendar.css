@@ -1,0 +1,13 @@
+.tasks_container{
+    -fx-spacing: 10;
+}
+.Calendar_container{
+
+}
+.Calendar_container Text{
+    -fx-font-size: 1.5em;
+}
+.Calendar_container Calendar{
+    -fx-cell-size: 150;
+
+}
