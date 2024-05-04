@@ -57,19 +57,23 @@ public class FocusController implements Initializable {
 
         // bind focus slider to focus timer
         Model.getInstance().getFocusSlider().addListener(((observableValue, oldValue, newValue) -> {
-            if (oldValue.doubleValue() != 0.0 && currentTimer.get().equals(CurrentTimer.FOCUS)) {
+            if (oldValue.doubleValue() != 0.0) {
                 focusTimer.timeProperty().set(newValue.longValue());
-                start_btn.setSelected(false);
-                refreshProgressIndicator();
+                if (currentTimer.get().equals(CurrentTimer.FOCUS)) {
+                    start_btn.setSelected(false);
+                    refreshProgressIndicator();
+                }
             }
         }));
 
         // bind break slider to break timer
         Model.getInstance().getBreakSlider().addListener(((observableValue, oldValue, newValue) -> {
-            if (oldValue.doubleValue() != 0.0 && currentTimer.get().equals(CurrentTimer.BREAK)) {
+            if (oldValue.doubleValue() != 0.0) {
                 breakTimer.timeProperty().set(newValue.longValue());
-                start_btn.setSelected(false);
-                refreshProgressIndicator();
+                if (currentTimer.get().equals(CurrentTimer.BREAK)) {
+                    start_btn.setSelected(false);
+                    refreshProgressIndicator();
+                }
             }
 
         }));
