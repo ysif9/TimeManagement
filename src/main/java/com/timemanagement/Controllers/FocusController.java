@@ -139,6 +139,11 @@ public class FocusController implements Initializable {
             task_lbl.setText(task.taskNameProperty().get());
             Model.formatTaskTime(task, time_lbl);
             task.completedProperty().bindBidirectional(task_cb.selectedProperty());
+            task.completedProperty().addListener((observableValue, oldValue, newValue) -> {
+                if (newValue) {
+                    setTask(null);
+                }
+            });
             oldTaskValue = task.timeSpentInMinutesProperty().get();
         }
     }
