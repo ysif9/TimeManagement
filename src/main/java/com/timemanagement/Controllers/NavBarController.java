@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class NavBarController implements Initializable {
     public VBox tasks_btn;
-    public VBox flashcards_btn;
+//    public VBox flashcards_btn;
     public VBox focus_btn;
     public VBox calendar_btn;
     public VBox settings_btn;
@@ -30,7 +30,7 @@ public class NavBarController implements Initializable {
         tasks_btn.setOnMouseClicked(e -> onTasksClicked());
         settings_btn.setOnMouseClicked(e -> onSettingsClicked());
         calendar_btn.setOnMouseClicked(e -> onCalendarClicked());
-        flashcards_btn.setOnMouseClicked(e -> onFlashcardsClicked());
+//        flashcards_btn.setOnMouseClicked(e -> onFlashcardsClicked());
         focus_btn.setOnMouseClicked(e -> onFocusClicked());
         selected = focus_btn;
     }
@@ -59,10 +59,10 @@ public class NavBarController implements Initializable {
         Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.FOCUS);
     }
 
-    private void onFlashcardsClicked() {
-        setSelectedStyle(flashcards_btn);
-        Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.FLASHCARDS);
-    }
+//    private void onFlashcardsClicked() {
+//        setSelectedStyle(flashcards_btn);
+//        Model.getInstance().getViewFactory().getChosenNavItem().setValue(ChosenNavItem.FLASHCARDS);
+//    }
 
     private void onCalendarClicked() {
         setSelectedStyle(calendar_btn);

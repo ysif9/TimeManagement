@@ -5,9 +5,11 @@ import atlantafx.base.controls.CustomTextField;
 import atlantafx.base.controls.Popover;
 import atlantafx.base.controls.Spacer;
 import atlantafx.base.theme.Tweaks;
+import com.timemanagement.Models.DatabaseDriver;
 import com.timemanagement.Models.Model;
 import com.timemanagement.Models.NoSelectionModel;
 import com.timemanagement.Models.Task;
+import com.timemanagement.Styles;
 import com.timemanagement.Views.TaskCellFactory;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -21,19 +23,18 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class TasksController implements Initializable {
+    private final ObservableList<Task> allTasks = FXCollections.observableArrayList();
     public ListView<Task> today_listview;
     public ListView<Task> completed_listview;
     public ListView<Task> upcoming_listview;
     public Accordion accordion;
     public TitledPane today_pane;
     public VBox parent_vbox;
-
-
     private final ObservableList<Task> todayTasks = FXCollections.observableArrayList();
     private final ObservableList<Task> upcomingTasks = FXCollections.observableArrayList();
     private final ObservableList<Task> completedTasks = FXCollections.observableArrayList();
@@ -42,10 +43,38 @@ public class TasksController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            allTasks.addAll(DatabaseDriver.loadAllTasks());
+            populateTaskLists();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
         newTaskSetup();
         listviewSetup();
+
+        Model.getInstance().getExitingFlagProperty().addListener(observable -> {
+            try {
+                saveAllTasks();
+            } catch (SQLException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
+    private void populateTaskLists() {
+        for (Task task : allTasks) {
+            if (task.completedProperty().get()) {
+                completedTasks.add(task);
+            } else if (task.deadlineProperty().get().isAfter(LocalDate.now())) {
+                upcomingTasks.add(task);
+            } else if (task.deadlineProperty().get().isEqual(LocalDate.now())) {
+                todayTasks.add(task);
+            }
+            setTaskListeners(task);
+        }
+    }
 
     private void listviewSetup() {
 
@@ -105,13 +134,10 @@ public class TasksController implements Initializable {
         cal.getStyleClass().add(Tweaks.EDGE_TO_EDGE);
         cal.setValue(null);
 
-
         var pop2 = new Popover(cal);
         pop2.setHeaderAlwaysVisible(false);
         pop2.setDetachable(false);
         pop2.setArrowLocation(Popover.ArrowLocation.TOP_LEFT);
-
-
 
         var datePickerButton = new Button(null, new FontIcon(Feather.CALENDAR));
         datePickerButton.setOnMouseClicked(e -> pop2.show(datePickerButton));
@@ -123,32 +149,61 @@ public class TasksController implements Initializable {
         toolbar_newtask.getChildren().addAll(textField, new Spacer(120), datePickerButton, new Spacer(10), newTaskBtn);
 
         newTaskBtn.setOnMouseClicked(e -> {
-            if (!textField.getText().isEmpty() && cal.getValue() != null ) {
-                Task task = new Task(textField.getText(), cal.getValue(), "00:00");
-                task.completedProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue) {
-                        todayTasks.removeIf(t -> t.equals(task));
-                        upcomingTasks.removeIf(t -> t.equals(task));
-                        completedTasks.add(task);
-                    }
-                });
-                task.deletedProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue) {
-                        todayTasks.removeIf(t -> t.equals(task));
-                        upcomingTasks.removeIf(t -> t.equals(task));
-                        completedTasks.removeIf(t -> t.equals(task));
-                    }
-                });
-                if (Objects.equals(cal.getValue(), LocalDate.now())) {
-                    todayTasks.add(task);
+            if (!textField.getText().isEmpty() && cal.getValue() != null) {
+                Task task = new Task(allTasks.size(), textField.getText(), cal.getValue(), 0.0, false);
 
-                } else {
-                    upcomingTasks.add(task);
-                }
+                addTask(task);
+
                 textField.setText("");
                 cal.setValue(null);
             }
         });
+    }
+
+    private void addTask(Task task) {
+        if (task.deadlineProperty().get().isEqual(LocalDate.now())) {
+            todayTasks.add(task);
+        } else if (task.deadlineProperty().get().isAfter(LocalDate.now())) {
+            upcomingTasks.add(task);
+        }
+
+        setTaskListeners(task);
+
+        try {
+            DatabaseDriver.saveTask(task);
+            allTasks.add(task);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setTaskListeners(Task task) {
+        task.completedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                todayTasks.removeIf(t -> t.equals(task));
+                upcomingTasks.removeIf(t -> t.equals(task));
+                completedTasks.add(task);
+            }
+        });
+        task.deleteFlagProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                todayTasks.removeIf(t -> t.equals(task));
+                upcomingTasks.removeIf(t -> t.equals(task));
+                completedTasks.removeIf(t -> t.equals(task));
+                try {
+                    DatabaseDriver.deleteTask(task.idProperty().get());
+                    allTasks.remove(task);
+                } catch (SQLException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    private void saveAllTasks() throws SQLException, ClassNotFoundException {
+        for (Task task : allTasks) {
+            DatabaseDriver.saveTask(task);
+        }
     }
 
     static class FutureDateCell extends DateCell {

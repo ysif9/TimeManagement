@@ -5,6 +5,7 @@ import com.timemanagement.ChosenNavItem;
 import com.timemanagement.Models.Model;
 import com.timemanagement.Models.Task;
 import com.timemanagement.Models.Timer;
+import com.timemanagement.Styles;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.Initializable;
@@ -30,6 +31,8 @@ public class FocusController implements Initializable {
     private Timer focusTimer;
     private Timer breakTimer;
     private final ObjectProperty<CurrentTimer> currentTimer = new SimpleObjectProperty<>();
+    private double oldTaskValue = 0;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -110,7 +113,7 @@ public class FocusController implements Initializable {
         });
         left_btn.setOnMouseClicked(e -> currentTimer.set(CurrentTimer.FOCUS));
         right_btn.setOnMouseClicked(e -> currentTimer.set(CurrentTimer.BREAK));
-
+        setTask(null);
     }
 
     private void refreshProgressIndicator() {
@@ -120,13 +123,15 @@ public class FocusController implements Initializable {
 
     private void setTask(Task task) {
         if (task == null) {
-            task_lbl.setText("");
+            task_lbl.setText("No task selected.");
+            time_lbl.textProperty().unbind();
             time_lbl.setText("");
             task_cb.setSelected(false);
         } else {
             task_lbl.setText(task.taskNameProperty().get());
-            time_lbl.setText(task.timeSpentProperty().get());
-            task.completedProperty().bind(task_cb.selectedProperty());
+            Model.formatTaskTime(task, time_lbl);
+            task.completedProperty().bindBidirectional(task_cb.selectedProperty());
+            oldTaskValue = task.timeSpentInMinutesProperty().get();
         }
     }
 
@@ -153,24 +158,37 @@ public class FocusController implements Initializable {
                     "-fx-background-color: -color-accent-emphasis;" +
                             "-fx-effect: dropshadow(gaussian, -color-accent-muted, 0, 6, 0, 6);");
             start_btn.setText("START");
+            oldTaskValue = Model.getInstance().getSelectedTask().timeSpentInMinutesProperty().get();
             timerUsed.stopTimer();
         }
     }
 
     private String percentageToMinuteSecond(double progress) {
-        long timerUsed;
+        Timer timerUsed;
         if (currentTimer.get().equals(CurrentTimer.FOCUS)) {
-            timerUsed = focusTimer.timeProperty().get();
+            timerUsed = focusTimer;
         } else {
-            timerUsed = breakTimer.timeProperty().get();
+            timerUsed = breakTimer;
         }
 
-        double timerInMinutes = progress * timerUsed;
+        double timerInMinutes = progress * timerUsed.timeProperty().get();
+        double totalTimerInMinutesPassed = timerUsed.timeProperty().get() - timerInMinutes;
 
         int minutes = (int) timerInMinutes;
         int seconds = (int) ((timerInMinutes - minutes) * 60);
 
+        if (progress != 1 && progress != 0 && currentTimer.get().equals(CurrentTimer.FOCUS)) {
+            updateTaskTime(totalTimerInMinutesPassed);
+        }
+
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private void updateTaskTime(double totalTimeInMinutes) {
+
+       if (Model.getInstance().getSelectedTask() != null && totalTimeInMinutes != 0) {
+           Model.getInstance().getSelectedTask().timeSpentInMinutesProperty().set(oldTaskValue + totalTimeInMinutes);
+       }
     }
 
     /*

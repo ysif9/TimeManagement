@@ -2,6 +2,7 @@ package com.timemanagement.Views;
 
 import com.timemanagement.ChosenNavItem;
 import com.timemanagement.Controllers.ApplicationController;
+import com.timemanagement.Models.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
@@ -96,7 +97,11 @@ public class ViewFactory {
         stage.setTitle("Chronus");
         stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/logo3.png"))));
         stage.show();
-        stage.setOnCloseRequest(e -> System.exit(0));
+        stage.setOnCloseRequest(e -> {
+            e.consume();
+            Model.getInstance().getExitingFlagProperty().set(true);
+            System.exit(0);
+        });
     }
 
 

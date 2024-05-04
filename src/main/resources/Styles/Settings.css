@@ -1,19 +1,19 @@
 
 .Text{
-   -fx-fill: #DDDDDD;
+   -fx-fill: -color-fg-default;
     -fx-font-size: 1.35em;
     -fx-font-weight: 700;
     -fx-font-family: "Inter Semi Bold";
     -fx-background-color:  -color-bg-default;
     -fx-border-width: 0 0 1 0;
-    -fx-effect: dropshadow(two-pass-box,#222222,3,0,0,3);
+    -fx-effect: dropshadow(two-pass-box,-color-border-default,3,0,0,3);
 }
 ToggleSwitch{
-    -fx-effect: dropshadow(three-pass-box,#111111,3,0,0,3);
+    -fx-effect: dropshadow(three-pass-box,-color-bg-default,3,0,0,3);
 
 }
 Slider{
-    -fx-effect: dropshadow(three-pass-box,#333333,3,0,0,3);
+    -fx-effect: dropshadow(three-pass-box,-color-border-default,3,0,0,3);
 
 }
 Slider:hover{

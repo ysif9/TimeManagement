@@ -1,4 +1,4 @@
-package com.timemanagement.Controllers;
+package com.timemanagement;
 
 /* SPDX-License-Identifier: MIT */
 import static java.nio.charset.StandardCharsets.UTF_8;

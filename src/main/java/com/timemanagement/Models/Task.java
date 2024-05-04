@@ -5,18 +5,20 @@ import javafx.beans.property.*;
 import java.time.LocalDate;
 
 public class Task {
+    private final IntegerProperty id;
     private final StringProperty taskName;
-    private final StringProperty timeSpent;
+    private final DoubleProperty timeSpentInMinutes;
     private final ObjectProperty<LocalDate> deadline;
     private final BooleanProperty completed;
-    private final BooleanProperty deleted;
+    private final BooleanProperty deleteFlag;
 
-    public Task(String taskName, LocalDate deadline, String timeSpent) {
+    public Task(int id, String taskName, LocalDate deadline, Double timeSpentInMinutes, boolean completed) {
         this.taskName = new SimpleStringProperty(this, "task", taskName);
         this.deadline = new SimpleObjectProperty<>(this, "deadline", deadline);
-        this.timeSpent = new SimpleStringProperty(this, "time spent", timeSpent);
-        this.completed = new SimpleBooleanProperty(this, "completed", false);
-        this.deleted = new SimpleBooleanProperty(this, "deleted", false);
+        this.timeSpentInMinutes = new SimpleDoubleProperty(this, "time spent", timeSpentInMinutes);
+        this.completed = new SimpleBooleanProperty(this, "completed", completed);
+        this.deleteFlag = new SimpleBooleanProperty(this, "deleted", false);
+        this.id = new SimpleIntegerProperty(this, "id", id);
     }
 
 
@@ -28,16 +30,20 @@ public class Task {
         return this.deadline;
     }
 
-    public StringProperty timeSpentProperty() {
-        return this.timeSpent;
+    public DoubleProperty timeSpentInMinutesProperty() {
+        return this.timeSpentInMinutes;
     }
 
     public BooleanProperty completedProperty() {
         return this.completed;
     }
 
-    public BooleanProperty deletedProperty() {
-        return this.deleted;
+    public BooleanProperty deleteFlagProperty() {
+        return this.deleteFlag;
+    }
+
+    public IntegerProperty idProperty() {
+        return this.id;
     }
 
 }

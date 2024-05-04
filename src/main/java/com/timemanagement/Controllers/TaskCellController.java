@@ -1,6 +1,8 @@
 package com.timemanagement.Controllers;
 
+import com.timemanagement.Models.Model;
 import com.timemanagement.Models.Task;
+import com.timemanagement.Styles;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -47,7 +49,7 @@ public class TaskCellController implements Initializable {
         );
         deleteBtn.setGraphic(deleteIcon);
         deleteBtn.setPadding(new Insets(8));
-        deleteBtn.setOnMouseClicked(e -> task.deletedProperty().set(true));
+        deleteBtn.setOnMouseClicked(e -> task.deleteFlagProperty().set(true));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -66,7 +68,7 @@ public class TaskCellController implements Initializable {
         info_box.getChildren().add(deleteBtn);
         task_lbl.textProperty().bind(task.taskNameProperty());
         deadline_lbl.textProperty().bind(Bindings.createStringBinding(() -> stringConverter.toString(task.deadlineProperty().get())));
-        time_lbl.textProperty().bind(task.timeSpentProperty());
+        Model.formatTaskTime(task, time_lbl);
         task_checkbox.selectedProperty().bindBidirectional(task.completedProperty());
 
     }
