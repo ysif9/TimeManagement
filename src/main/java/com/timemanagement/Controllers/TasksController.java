@@ -149,8 +149,14 @@ public class TasksController implements Initializable {
         toolbar_newtask.getChildren().addAll(textField, new Spacer(120), datePickerButton, new Spacer(10), newTaskBtn);
 
         newTaskBtn.setOnMouseClicked(e -> {
-            if (!textField.getText().isEmpty() && cal.getValue() != null) {
-                Task task = new Task(allTasks.size(), textField.getText(), cal.getValue(), 0.0, false);
+            if (!textField.getText().isEmpty()) {
+                LocalDate calVal;
+                if (cal.getValue() != null) {
+                    calVal = cal.getValue();
+                } else {
+                    calVal = LocalDate.now();
+                }
+                Task task = new Task(allTasks.size(), textField.getText(), calVal, 0.0, false);
 
                 addTask(task);
 

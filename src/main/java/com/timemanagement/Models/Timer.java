@@ -2,10 +2,7 @@ package com.timemanagement.Models;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.*;
 import javafx.util.Duration;
 
 public class Timer {
@@ -13,14 +10,17 @@ public class Timer {
     private Timeline timeline;
     private final DoubleProperty percentage;
     private final LongProperty time;
+    private final BooleanProperty timerDoneFlag;
 
     public Timer(long time) {
         this.time = new SimpleLongProperty(this, "time", time);
         this.percentage = new SimpleDoubleProperty(1);
+        this.timerDoneFlag = new SimpleBooleanProperty(false);
     }
 
     // Create new thread for timer
     public void startTimer() {
+        timerDoneFlag.set(false);
         timerThread = new Thread(this::countdownTimer);
         timerThread.start();
     }
@@ -40,9 +40,10 @@ public class Timer {
         long startTime = System.currentTimeMillis();
         long endTime = startTime + time.getValue() * 60 * 1000; // Calculate endTime once
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
             percentage.set(((double) (endTime - System.currentTimeMillis()) / (time.getValue() * 60 * 1000)));
             if (System.currentTimeMillis() >= endTime) {
+                timerDoneFlag.set(true);
                 stopTimer();
             }
         }));
@@ -56,5 +57,9 @@ public class Timer {
 
     public LongProperty timeProperty() {
         return time;
+    }
+
+    public BooleanProperty timerDoneFlagProperty() {
+        return timerDoneFlag;
     }
 }

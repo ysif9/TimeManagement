@@ -94,6 +94,14 @@ public class FocusController implements Initializable {
                 ring_progress.setProgress(Math.clamp(newValue.doubleValue(), 0, 1));
             }
         });
+        focusTimer.timerDoneFlagProperty().addListener(observableValue -> {
+            currentTimer.set(CurrentTimer.BREAK);
+            right_btn.setSelected(true);
+        });
+        breakTimer.timerDoneFlagProperty().addListener(observableValue -> {
+            currentTimer.set(CurrentTimer.FOCUS);
+            left_btn.setSelected(true);
+        });
 
         // setting up styles
         setupToggleGroup();
@@ -158,7 +166,9 @@ public class FocusController implements Initializable {
                     "-fx-background-color: -color-accent-emphasis;" +
                             "-fx-effect: dropshadow(gaussian, -color-accent-muted, 0, 6, 0, 6);");
             start_btn.setText("START");
-            oldTaskValue = Model.getInstance().getSelectedTask().timeSpentInMinutesProperty().get();
+            if (Model.getInstance().getSelectedTask() != null) {
+                oldTaskValue = Model.getInstance().getSelectedTask().timeSpentInMinutesProperty().get();
+            }
             timerUsed.stopTimer();
         }
     }
