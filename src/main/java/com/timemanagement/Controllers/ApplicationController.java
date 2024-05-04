@@ -19,7 +19,8 @@ public class ApplicationController implements Initializable {
                 case SETTINGS -> client_parent.setCenter(Model.getInstance().getViewFactory().getSettingsView());
                 case TASKS -> client_parent.setCenter(Model.getInstance().getViewFactory().getTasksView());
                 case CALENDAR -> client_parent.setCenter(Model.getInstance().getViewFactory().getCalenderView());
-                default -> client_parent.setCenter(Model.getInstance().getViewFactory().getFocusView());
+                case FOCUS -> client_parent.setCenter(Model.getInstance().getViewFactory().getFocusView());
+                default -> System.out.println("nothing");
             }
         });
 

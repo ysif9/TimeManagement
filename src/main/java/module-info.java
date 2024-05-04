@@ -12,8 +12,6 @@ module com.timemanagement.timemanagement {
     requires org.kordamp.ikonli.feather;
     requires com.calendarfx.view;
     requires org.kordamp.ikonli.material2;
-    //requires com.gluonhq.charm.glisten;
-
 
     opens com.timemanagement to javafx.fxml;
     exports com.timemanagement;

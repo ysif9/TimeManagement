@@ -1,8 +1,4 @@
-.Container{
 
-
-
-}
 .Text{
    -fx-fill: #DDDDDD;
     -fx-font-size: 1.35em;
@@ -12,17 +8,17 @@
     -fx-border-width: 0 0 1 0;
     -fx-effect: dropshadow(two-pass-box,#222222,3,0,0,3);
 }
-.Container ToggleSwitch{
+ToggleSwitch{
     -fx-effect: dropshadow(three-pass-box,#111111,3,0,0,3);
 
 }
-.Container Slider{
+Slider{
     -fx-effect: dropshadow(three-pass-box,#333333,3,0,0,3);
 
 }
-.Container Slider:hover{
+Slider:hover{
     -fx-cursor: hand;
 }
-.Container ToggleSwitch:hover{
+ToggleSwitch:hover{
     -fx-cursor: hand;
 }

@@ -5,6 +5,8 @@ import atlantafx.base.controls.CustomTextField;
 import atlantafx.base.controls.Popover;
 import atlantafx.base.controls.Spacer;
 import atlantafx.base.theme.Tweaks;
+import com.timemanagement.Models.Model;
+import com.timemanagement.Models.NoSelectionModel;
 import com.timemanagement.Models.Task;
 import com.timemanagement.Views.TaskCellFactory;
 import javafx.beans.binding.Bindings;
@@ -20,6 +22,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class TasksController implements Initializable {
@@ -31,7 +34,9 @@ public class TasksController implements Initializable {
     public VBox parent_vbox;
 
 
-    private final ObservableList<Task> tasks = FXCollections.observableArrayList();
+    private final ObservableList<Task> todayTasks = FXCollections.observableArrayList();
+    private final ObservableList<Task> upcomingTasks = FXCollections.observableArrayList();
+    private final ObservableList<Task> completedTasks = FXCollections.observableArrayList();
     public HBox toolbar_newtask;
 
 
@@ -43,18 +48,47 @@ public class TasksController implements Initializable {
 
 
     private void listviewSetup() {
-        double maxHeight = 500;
 
-        today_listview.prefHeightProperty().bind(
+        bindHeight(today_listview, todayTasks);
+        bindHeight(upcoming_listview, upcomingTasks);
+        bindHeight(completed_listview, completedTasks);
+
+        completed_listview.setSelectionModel(new NoSelectionModel<>());
+        today_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Model.getInstance().setSelectedTask(newValue);
+                upcoming_listview.getSelectionModel().clearSelection();
+            } else  {
+                Model.getInstance().setSelectedTask(null);
+            }
+        });
+        upcoming_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Model.getInstance().setSelectedTask(newValue);
+                today_listview.getSelectionModel().clearSelection();
+            } else  {
+                Model.getInstance().setSelectedTask(null);
+            }
+        });
+
+        setCell(today_listview, todayTasks);
+        setCell(upcoming_listview, upcomingTasks);
+        setCell(completed_listview, completedTasks);
+
+    }
+
+    private void setCell(ListView<Task> listView, ObservableList<Task> tasks) {
+        listView.setItems(tasks);
+        listView.setCellFactory(e -> new TaskCellFactory());
+    }
+
+    private void bindHeight(ListView<Task> listView, ObservableList<Task> tasks) {
+        double maxHeight = 500;
+        listView.prefHeightProperty().bind(
                 Bindings.when(Bindings.size(tasks).multiply(50).add(20).lessThan(maxHeight))
                         .then(Bindings.size(tasks).multiply(50).add(20))
                         .otherwise(maxHeight)
         );
-        upcoming_listview.maxHeightProperty().bind(Bindings.size(tasks).multiply(70));
-        completed_listview.maxHeightProperty().bind(Bindings.size(tasks).multiply(70));
-
-        today_listview.setItems(tasks);
-        today_listview.setCellFactory(e -> new TaskCellFactory());
     }
 
     private void newTaskSetup() {
@@ -91,12 +125,30 @@ public class TasksController implements Initializable {
         newTaskBtn.setOnMouseClicked(e -> {
             if (!textField.getText().isEmpty() && cal.getValue() != null ) {
                 Task task = new Task(textField.getText(), cal.getValue(), "00:00");
-                tasks.add(task);
+                task.completedProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue) {
+                        todayTasks.removeIf(t -> t.equals(task));
+                        upcomingTasks.removeIf(t -> t.equals(task));
+                        completedTasks.add(task);
+                    }
+                });
+                task.deletedProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue) {
+                        todayTasks.removeIf(t -> t.equals(task));
+                        upcomingTasks.removeIf(t -> t.equals(task));
+                        completedTasks.removeIf(t -> t.equals(task));
+                    }
+                });
+                if (Objects.equals(cal.getValue(), LocalDate.now())) {
+                    todayTasks.add(task);
+
+                } else {
+                    upcomingTasks.add(task);
+                }
                 textField.setText("");
                 cal.setValue(null);
             }
         });
-
     }
 
     static class FutureDateCell extends DateCell {

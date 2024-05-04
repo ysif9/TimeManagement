@@ -4,7 +4,6 @@ import atlantafx.base.controls.ProgressSliderSkin;
 import atlantafx.base.controls.ToggleSwitch;
 import com.timemanagement.Models.Model;
 import com.timemanagement.Theme;
-
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -44,11 +43,10 @@ focus_time_slider.setMax(60);
         });
 
         //sliders listeners
-        focus_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) ->
-                focus_time_lbl.setText(String.valueOf(((int)focus_time_slider.getValue() ))));
-        break_time_slider.valueChangingProperty().addListener((observable, oldValue, newValue) ->
-                break_time_lbl.setText(String.valueOf(((int)break_time_slider.getValue() ))));
+        focus_time_slider.valueProperty().addListener(observable -> focus_time_lbl.setText(String.valueOf(((int)focus_time_slider.getValue()))));
+        Model.getInstance().getFocusSlider().bind(focus_time_slider.valueProperty());
+        Model.getInstance().getBreakSlider().bind(break_time_slider.valueProperty());
+        break_time_slider.valueProperty().addListener(observable -> break_time_lbl.setText(String.valueOf(((int)break_time_slider.getValue()))));
 
     }
-
 }

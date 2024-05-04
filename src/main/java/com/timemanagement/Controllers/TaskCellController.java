@@ -47,10 +47,11 @@ public class TaskCellController implements Initializable {
         );
         deleteBtn.setGraphic(deleteIcon);
         deleteBtn.setPadding(new Insets(8));
+        deleteBtn.setOnMouseClicked(e -> task.deletedProperty().set(true));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        StringConverter<LocalDate> stringConverter = new StringConverter<LocalDate>() {
+        StringConverter<LocalDate> stringConverter = new StringConverter<>() {
             @Override
             public String toString(LocalDate date) {
                 return date != null ? formatter.format(date) : "";
@@ -66,7 +67,7 @@ public class TaskCellController implements Initializable {
         task_lbl.textProperty().bind(task.taskNameProperty());
         deadline_lbl.textProperty().bind(Bindings.createStringBinding(() -> stringConverter.toString(task.deadlineProperty().get())));
         time_lbl.textProperty().bind(task.timeSpentProperty());
-        task.completedProperty().bind(task_checkbox.selectedProperty());
+        task_checkbox.selectedProperty().bindBidirectional(task.completedProperty());
 
     }
 

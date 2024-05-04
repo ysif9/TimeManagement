@@ -8,6 +8,5 @@
       <fx:include source="NavBar.fxml"/>
    </top>
    <center>
-      <fx:include source="Focus.fxml"/>
    </center>
 </BorderPane>

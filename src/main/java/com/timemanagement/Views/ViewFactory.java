@@ -8,14 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ViewFactory {
     private VBox focusView;
-    private HBox navBarView;
     private VBox tasksView;
     private AnchorPane settingsView;
     private VBox calenderView;
@@ -77,24 +74,12 @@ public class ViewFactory {
         return calenderView;
     }
 
-
-    public HBox getNavBarView() {
-        if (navBarView == null) {
-            try {
-                navBarView = new FXMLLoader(getClass().getResource("/Fxml/NavBar.fxml")).load();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return navBarView;
-    }
-
     public void showApplication() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/Application.fxml"));
         ApplicationController controller = new ApplicationController();
         fxmlLoader.setController(controller);
-        chosenNavItem.setValue(ChosenNavItem.FOCUS);
         createStage(fxmlLoader);
+        chosenNavItem.setValue(ChosenNavItem.FOCUS);
     }
 
     private void createStage(FXMLLoader fxmlLoader) {
