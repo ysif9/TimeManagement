@@ -81,6 +81,8 @@ public class ViewFactory {
         fxmlLoader.setController(controller);
         createStage(fxmlLoader);
         chosenNavItem.setValue(ChosenNavItem.FOCUS);
+        //Pre-load tasks
+        getTasksView();
     }
 
     private void createStage(FXMLLoader fxmlLoader) {

@@ -1,5 +1,9 @@
-package com.timemanagement.Models;
+/**
+ * Singleton class representing the application's model.
+ * This class provides access to various properties and functionalities used throughout the application.
+ */
 
+package com.timemanagement.Models;
 
 import com.timemanagement.Theme;
 import com.timemanagement.Views.ViewFactory;
@@ -14,13 +18,17 @@ import java.time.LocalDate;
 public class Model {
     private final ViewFactory viewFactory;
     private static Model model;
+
+    // Properties
     private Task selectedTask;
     private final DoubleProperty focusSliderValue;
     private final DoubleProperty breakSliderValue;
     private final ObjectProperty<Theme> theme;
     private final BooleanProperty exitingFlag;
-private final ObjectProperty<LocalDate> selectedDate;
-private final ObservableList<Task> tasksOnSelectedDate;
+    private final ObjectProperty<LocalDate> selectedDate;
+    private final ObservableList<Task> tasksOnSelectedDate;
+
+    // Private constructor to enforce singleton pattern
     private Model() {
         this.viewFactory = new ViewFactory();
         this.theme = new SimpleObjectProperty<>(this, "theme", Theme.DARK);
@@ -31,6 +39,7 @@ private final ObservableList<Task> tasksOnSelectedDate;
         this.tasksOnSelectedDate = FXCollections.observableArrayList();
     }
 
+    // Singleton getInstance method
     public static synchronized Model getInstance() {
         if (model == null) {
             model = new Model();
@@ -38,6 +47,7 @@ private final ObservableList<Task> tasksOnSelectedDate;
         return model;
     }
 
+    // Utility method to format task time for display
     public static void formatTaskTime(Task task, Label timeLbl) {
         timeLbl.textProperty().bind(Bindings.createStringBinding(
                 () -> {
@@ -50,21 +60,22 @@ private final ObservableList<Task> tasksOnSelectedDate;
         ));
     }
 
-
+    // Getters and setters for properties
     public Task getSelectedTask() {
         return selectedTask;
     }
+
     public void setSelectedTask(Task selectedTask) {
         this.selectedTask = selectedTask;
     }
 
-   public DoubleProperty getFocusSlider() {
+    public DoubleProperty getFocusSlider() {
         return focusSliderValue;
-   }
+    }
 
-   public DoubleProperty getBreakSlider() {
+    public DoubleProperty getBreakSlider() {
         return breakSliderValue;
-   }
+    }
 
     public ViewFactory getViewFactory() {
         return viewFactory;
@@ -77,8 +88,6 @@ private final ObservableList<Task> tasksOnSelectedDate;
     public BooleanProperty getExitingFlagProperty() {
         return exitingFlag;
     }
-
-
 
     public ObjectProperty<LocalDate> selectedDateProperty() {
         return selectedDate;

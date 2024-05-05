@@ -1,4 +1,10 @@
-package com.timemanagement.Models;
+/**
+ * The DatabaseDriver class provides methods to interact with an SQLite database for task management.
+ * It encapsulates functionality to create a table for tasks, save tasks, delete tasks, and load all tasks
+ * from the database. This class acts as a bridge between the application and the underlying database.
+ */
+
+ package com.timemanagement.Models;
 
 import java.sql.*;
 import java.time.LocalDate;

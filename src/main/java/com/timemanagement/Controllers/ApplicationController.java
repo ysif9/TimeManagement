@@ -1,3 +1,8 @@
+/**
+ * Controller class for managing the application's main layout.
+ * This class is responsible for updating the center content of the BorderPane based on the chosen navigation item.
+ * It listens for changes in the chosen navigation item and updates the center content accordingly.
+ */
 package com.timemanagement.Controllers;
 
 import com.timemanagement.Models.Model;
@@ -8,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ApplicationController implements Initializable {
-
 
     public BorderPane client_parent;
 
@@ -23,10 +27,6 @@ public class ApplicationController implements Initializable {
                 default -> System.out.println("nothing");
             }
         });
-
-
-
     }
-
-
 }
+

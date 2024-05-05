@@ -1,3 +1,9 @@
+/**
+ * The TasksController class serves as the controller for managing tasks within the time management application.
+ * It handles the initialization of UI components, loading tasks from the database, populating task lists based on categories,
+ * adding new tasks, updating task lists based on selected dates, and managing task properties such as completion and deletion.
+ */
+
 package com.timemanagement.Controllers;
 
 import atlantafx.base.controls.Calendar;
@@ -28,53 +34,45 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class TasksController implements Initializable {
+
+    // ObservableLists for different task categories
     private final ObservableList<Task> allTasks = FXCollections.observableArrayList();
+    private final ObservableList<Task> todayTasks = FXCollections.observableArrayList();
+    private final ObservableList<Task> upcomingTasks = FXCollections.observableArrayList();
+    private final ObservableList<Task> completedTasks = FXCollections.observableArrayList();
+
+    // UI elements
     public ListView<Task> today_listview;
     public ListView<Task> completed_listview;
     public ListView<Task> upcoming_listview;
     public Accordion accordion;
     public TitledPane today_pane;
     public VBox parent_vbox;
-    private final ObservableList<Task> todayTasks = FXCollections.observableArrayList();
-    private final ObservableList<Task> upcomingTasks = FXCollections.observableArrayList();
-    private final ObservableList<Task> completedTasks = FXCollections.observableArrayList();
     public HBox toolbar_newtask;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            allTasks.addAll(DatabaseDriver.loadAllTasks());
+            loadTasksFromDatabase();
             populateTaskLists();
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-
-        newTaskSetup();
-        listviewSetup();
-
-        Model.getInstance().getExitingFlagProperty().addListener(observable -> {
-            try {
-                saveAllTasks();
-            } catch (SQLException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        Model.getInstance().selectedDateProperty().addListener((observableValue, oldVal, newVal) -> {
-            Model.getInstance().getTasksOnSelectedDate().clear();
-            for (Task allTask : allTasks) {
-
-                if (allTask.deadlineProperty().getValue().equals(newVal)) {
-                    Model.getInstance().getTasksOnSelectedDate().add(allTask);
-
-                }
-
-            }
-        } );
+        // Setup new task UI components
+        setupNewTask();
+        // Setup list views
+        setupListViews();
+        // Listen for changes in selected date
+        Model.getInstance().selectedDateProperty().addListener((observableValue, oldVal, newVal) -> updateSelectedDateTasks());
     }
 
+    // Load tasks from the database
+    private void loadTasksFromDatabase() throws SQLException, ClassNotFoundException {
+        allTasks.addAll(DatabaseDriver.loadAllTasks());
+    }
+
+    // Populate task lists based on task categories
     private void populateTaskLists() {
         for (Task task : allTasks) {
             if (task.completedProperty().get()) {
@@ -88,41 +86,20 @@ public class TasksController implements Initializable {
         }
     }
 
-    private void listviewSetup() {
-
+    // Setup list views
+    private void setupListViews() {
         bindHeight(today_listview, todayTasks);
         bindHeight(upcoming_listview, upcomingTasks);
         bindHeight(completed_listview, completedTasks);
 
         completed_listview.setSelectionModel(new NoSelectionModel<>());
-        today_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                Model.getInstance().setSelectedTask(newValue);
-                upcoming_listview.getSelectionModel().clearSelection();
-            } else  {
-                Model.getInstance().setSelectedTask(null);
-            }
-        });
-        upcoming_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                Model.getInstance().setSelectedTask(newValue);
-                today_listview.getSelectionModel().clearSelection();
-            } else  {
-                Model.getInstance().setSelectedTask(null);
-            }
-        });
-
+        setupListViewSelectionListeners();
         setCell(today_listview, todayTasks);
         setCell(upcoming_listview, upcomingTasks);
         setCell(completed_listview, completedTasks);
-
     }
 
-    private void setCell(ListView<Task> listView, ObservableList<Task> tasks) {
-        listView.setItems(tasks);
-        listView.setCellFactory(e -> new TaskCellFactory());
-    }
-
+    // Bind list view height dynamically
     private void bindHeight(ListView<Task> listView, ObservableList<Task> tasks) {
         double maxHeight = 500;
         listView.prefHeightProperty().bind(
@@ -132,61 +109,81 @@ public class TasksController implements Initializable {
         );
     }
 
-    private void newTaskSetup() {
+    // Setup new task UI components
+    private void setupNewTask() {
+        // Create new task components
+        var textField = createCustomTextField();
+        var cal = createCalendar();
+        var datePickerButton = createDatePickerButton(cal);
+        var newTaskBtn = createNewTaskButton(textField, cal);
 
-        toolbar_newtask.setStyle("-fx-border-width: 1px; -fx-border-color: -color-border-default;");
+        // Add components to toolbar
+        toolbar_newtask.setAlignment(Pos.CENTER_LEFT);
+        toolbar_newtask.getChildren().addAll(textField, new Spacer(120), datePickerButton, new Spacer(10), newTaskBtn);
+    }
 
+    // Create custom text field for new task
+    private CustomTextField createCustomTextField() {
         var textField = new CustomTextField();
         textField.setPromptText("What are you working on?");
         textField.setPrefWidth(500);
         textField.setFocusTraversable(false);
+        return textField;
+    }
 
+    // Create calendar for selecting task deadline
+    private Calendar createCalendar() {
         var cal = new Calendar(LocalDate.now());
         cal.setDayCellFactory(c -> new FutureDateCell());
         cal.getStyleClass().add(Tweaks.EDGE_TO_EDGE);
         cal.setValue(null);
+        return cal;
+    }
 
+    // Create button for opening date picker popover
+    private Button createDatePickerButton(Calendar cal) {
+        var datePickerButton = new Button(null, new FontIcon(Feather.CALENDAR));
+        var pop2 = createCalendarPopover(cal);
+        datePickerButton.setOnMouseClicked(e -> pop2.show(datePickerButton));
+        datePickerButton.getStyleClass().add(Styles.FLAT);
+        return datePickerButton;
+    }
+
+    // Create popover for calendar
+    private Popover createCalendarPopover(Calendar cal) {
         var pop2 = new Popover(cal);
         pop2.setHeaderAlwaysVisible(false);
         pop2.setDetachable(false);
         pop2.setArrowLocation(Popover.ArrowLocation.TOP_LEFT);
-
-        var datePickerButton = new Button(null, new FontIcon(Feather.CALENDAR));
-        datePickerButton.setOnMouseClicked(e -> pop2.show(datePickerButton));
-        datePickerButton.getStyleClass().add(Styles.FLAT);
-        var newTaskBtn = new Button("Add Task", new FontIcon(Feather.PLUS));
-        newTaskBtn.getStyleClass().add(Styles.ACCENT);
-
-        toolbar_newtask.setAlignment(Pos.CENTER_LEFT);
-        toolbar_newtask.getChildren().addAll(textField, new Spacer(120), datePickerButton, new Spacer(10), newTaskBtn);
-
-        newTaskBtn.setOnMouseClicked(e -> {
-            if (!textField.getText().isEmpty()) {
-                LocalDate calVal;
-                if (cal.getValue() != null) {
-                    calVal = cal.getValue();
-                } else {
-                    calVal = LocalDate.now();
-                }
-                Task task = new Task(allTasks.size(), textField.getText(), calVal, 0.0, false);
-
-                addTask(task);
-
-                textField.setText("");
-                cal.setValue(null);
-            }
-        });
+        return pop2;
     }
 
-    private void addTask(Task task) {
+    // Create button for adding new task
+    private Button createNewTaskButton(CustomTextField textField, Calendar cal) {
+        var newTaskBtn = new Button("Add Task", new FontIcon(Feather.PLUS));
+        newTaskBtn.getStyleClass().add(Styles.ACCENT);
+        newTaskBtn.setOnMouseClicked(e -> addNewTask(textField, cal));
+        return newTaskBtn;
+    }
+
+    // Add new task
+    private void addNewTask(CustomTextField textField, Calendar cal) {
+        if (!textField.getText().isEmpty()) {
+            LocalDate calVal = (cal.getValue() != null) ? cal.getValue() : LocalDate.now();
+            Task task = new Task(allTasks.size(), textField.getText(), calVal, 0.0, false);
+            addToAppropriateTaskList(task);
+            clearTextFieldAndCalendar(textField, cal);
+        }
+    }
+
+    // Add task to appropriate task list
+    private void addToAppropriateTaskList(Task task) {
         if (task.deadlineProperty().get().isEqual(LocalDate.now())) {
             todayTasks.add(task);
         } else if (task.deadlineProperty().get().isAfter(LocalDate.now())) {
             upcomingTasks.add(task);
         }
-
         setTaskListeners(task);
-
         try {
             DatabaseDriver.saveTask(task);
             allTasks.add(task);
@@ -195,6 +192,49 @@ public class TasksController implements Initializable {
         }
     }
 
+    // Clear text field and calendar after adding task
+    private void clearTextFieldAndCalendar(CustomTextField textField, Calendar cal) {
+        textField.setText("");
+        cal.setValue(null);
+    }
+
+    // Update selected date tasks
+    private void updateSelectedDateTasks() {
+        Model.getInstance().getTasksOnSelectedDate().clear();
+        for (Task allTask : allTasks) {
+            if (allTask.deadlineProperty().getValue().equals(Model.getInstance().selectedDateProperty().get())) {
+                Model.getInstance().getTasksOnSelectedDate().add(allTask);
+            }
+        }
+    }
+
+    // Setup list view selection listeners
+    private void setupListViewSelectionListeners() {
+        today_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Model.getInstance().setSelectedTask(newValue);
+                upcoming_listview.getSelectionModel().clearSelection();
+            } else {
+                Model.getInstance().setSelectedTask(null);
+            }
+        });
+        upcoming_listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Model.getInstance().setSelectedTask(newValue);
+                today_listview.getSelectionModel().clearSelection();
+            } else {
+                Model.getInstance().setSelectedTask(null);
+            }
+        });
+    }
+
+    // Set custom cell factory for list views
+    private void setCell(ListView<Task> listView, ObservableList<Task> tasks) {
+        listView.setItems(tasks);
+        listView.setCellFactory(e -> new TaskCellFactory());
+    }
+
+    // Set listeners for task properties
     private void setTaskListeners(Task task) {
         task.completedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
@@ -218,14 +258,8 @@ public class TasksController implements Initializable {
         });
     }
 
-    private void saveAllTasks() throws SQLException, ClassNotFoundException {
-        for (Task task : allTasks) {
-            DatabaseDriver.saveTask(task);
-        }
-    }
-
+    // Date cell for future dates
     static class FutureDateCell extends DateCell {
-
         @Override
         public void updateItem(LocalDate date, boolean empty) {
             super.updateItem(date, empty);
