@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import atlantafx.base.controls.Calendar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="710.0" prefWidth="800.0" styleClass="Calendar_container" stylesheets="@../Styles/Calendar.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.timemanagement.Controllers.CalendarController">
+   <Calendar fx:id="calendar" layoutY="10.0" prefHeight="710.0" prefWidth="1000.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+   <Text layoutX="14.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks" wrappingWidth="57.40591049194336" />
+   <VBox layoutX="29.0" layoutY="61.0" prefHeight="153.0" prefWidth="171.0" styleClass="tasks_container">
+      <Label fx:id="task1" />
+      <Label fx:id="task2" layoutX="10.0" layoutY="10.0" />
+      <Label fx:id="task3" layoutX="10.0" layoutY="30.0" />
+      <Label fx:id="task4" layoutX="10.0" layoutY="50.0" />
+      <Label fx:id="task5" layoutX="10.0" layoutY="70.0" />
+   </VBox>
+</AnchorPane>

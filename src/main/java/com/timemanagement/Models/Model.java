@@ -5,7 +5,11 @@ import com.timemanagement.Theme;
 import com.timemanagement.Views.ViewFactory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+
+import java.time.LocalDate;
 
 public class Model {
     private final ViewFactory viewFactory;
@@ -15,13 +19,16 @@ public class Model {
     private final DoubleProperty breakSliderValue;
     private final ObjectProperty<Theme> theme;
     private final BooleanProperty exitingFlag;
-
+private final ObjectProperty<LocalDate> selectedDate;
+private final ObservableList<Task> tasksOnSelectedDate;
     private Model() {
         this.viewFactory = new ViewFactory();
         this.theme = new SimpleObjectProperty<>(this, "theme", Theme.DARK);
         this.focusSliderValue = new SimpleDoubleProperty();
         this.breakSliderValue = new SimpleDoubleProperty();
         this.exitingFlag = new SimpleBooleanProperty(false);
+        this.selectedDate = new SimpleObjectProperty<>();
+        this.tasksOnSelectedDate = FXCollections.observableArrayList();
     }
 
     public static synchronized Model getInstance() {
@@ -71,4 +78,13 @@ public class Model {
         return exitingFlag;
     }
 
+
+
+    public ObjectProperty<LocalDate> selectedDateProperty() {
+        return selectedDate;
+    }
+
+    public ObservableList<Task> getTasksOnSelectedDate() {
+        return tasksOnSelectedDate;
+    }
 }

@@ -61,6 +61,18 @@ public class TasksController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+
+        Model.getInstance().selectedDateProperty().addListener((observableValue, oldVal, newVal) -> {
+            Model.getInstance().getTasksOnSelectedDate().clear();
+            for (Task allTask : allTasks) {
+
+                if (allTask.deadlineProperty().getValue().equals(newVal)) {
+                    Model.getInstance().getTasksOnSelectedDate().add(allTask);
+
+                }
+
+            }
+        } );
     }
 
     private void populateTaskLists() {
