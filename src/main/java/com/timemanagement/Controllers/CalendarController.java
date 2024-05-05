@@ -53,7 +53,10 @@ public class CalendarController implements Initializable {
             label.setText(Model.getInstance().getTasksOnSelectedDate().get(index).taskNameProperty().getValue());
         } catch (Exception ex) {
             // Clear label's text if no task exists for the index
-            label.setText("");
+            if (index == 0)
+            label.setText("No Tasks to Display...");
+            else
+                label.setText("");
 
         }
     }
