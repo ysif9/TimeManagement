@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class Model {
@@ -20,6 +21,7 @@ public class Model {
     private static Model model;
 
     // Properties
+    private final ObservableList<Task> allTasks = FXCollections.observableArrayList();
     private Task selectedTask;
     private final DoubleProperty focusSliderValue;
     private final DoubleProperty breakSliderValue;
@@ -37,6 +39,9 @@ public class Model {
         this.exitingFlag = new SimpleBooleanProperty(false);
         this.selectedDate = new SimpleObjectProperty<>();
         this.tasksOnSelectedDate = FXCollections.observableArrayList();
+        loadTasksFromDatabase();
+        // Listen for changes in selected date
+        selectedDateProperty().addListener((observable) -> updateTasksOnSelectedDate());
     }
 
     // Singleton getInstance method
@@ -47,7 +52,42 @@ public class Model {
         return model;
     }
 
-    // Utility method to format task time for display
+    /**
+     * Task Logic
+     */
+
+    public ObservableList<Task> getAllTasks() {
+        return allTasks;
+    }
+
+    private void loadTasksFromDatabase() {
+        try {
+            allTasks.addAll(DatabaseDriver.loadAllTasks());
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void createNewTask(Task task) {
+        try {
+            DatabaseDriver.saveTask(task);
+            allTasks.add(task);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteTask (Task task) {
+        try {
+            DatabaseDriver.deleteTask(task.idProperty().get());
+            allTasks.remove(task);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Utility method to format task time for display in UI
     public static void formatTaskTime(Task task, Label timeLbl) {
         timeLbl.textProperty().bind(Bindings.createStringBinding(
                 () -> {
@@ -96,4 +136,14 @@ public class Model {
     public ObservableList<Task> getTasksOnSelectedDate() {
         return tasksOnSelectedDate;
     }
+
+    private void updateTasksOnSelectedDate() {
+        getTasksOnSelectedDate().clear();
+        for (Task allTask : getAllTasks()) {
+            if (allTask.deadlineProperty().getValue().equals(selectedDateProperty().get())) {
+                Model.getInstance().getTasksOnSelectedDate().add(allTask);
+            }
+        }
+    }
+
 }

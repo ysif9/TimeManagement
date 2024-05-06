@@ -54,6 +54,10 @@ ListView {
 }
 
 
+HBox {
+    -fx-border-width: 1px;
+    -fx-border-color: -color-border-default;
+}
 
 .newTask Button {
     -fx-font-family: Inter;

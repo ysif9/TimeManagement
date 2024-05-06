@@ -11,7 +11,6 @@ import atlantafx.base.controls.CustomTextField;
 import atlantafx.base.controls.Popover;
 import atlantafx.base.controls.Spacer;
 import atlantafx.base.theme.Tweaks;
-import com.timemanagement.Models.DatabaseDriver;
 import com.timemanagement.Models.Model;
 import com.timemanagement.Models.NoSelectionModel;
 import com.timemanagement.Models.Task;
@@ -29,14 +28,12 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class TasksController implements Initializable {
 
     // ObservableLists for different task categories
-    private final ObservableList<Task> allTasks = FXCollections.observableArrayList();
     private final ObservableList<Task> todayTasks = FXCollections.observableArrayList();
     private final ObservableList<Task> upcomingTasks = FXCollections.observableArrayList();
     private final ObservableList<Task> completedTasks = FXCollections.observableArrayList();
@@ -52,29 +49,18 @@ public class TasksController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            loadTasksFromDatabase();
-            populateTaskLists();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        populateTaskLists();
 
         // Setup new task UI components
         setupNewTask();
         // Setup list views
         setupListViews();
-        // Listen for changes in selected date
-        Model.getInstance().selectedDateProperty().addListener((observableValue, oldVal, newVal) -> updateSelectedDateTasks());
-    }
 
-    // Load tasks from the database
-    private void loadTasksFromDatabase() throws SQLException, ClassNotFoundException {
-        allTasks.addAll(DatabaseDriver.loadAllTasks());
     }
 
     // Populate task lists based on task categories
     private void populateTaskLists() {
-        for (Task task : allTasks) {
+        for (Task task : Model.getInstance().getAllTasks()) {
             if (task.completedProperty().get()) {
                 completedTasks.add(task);
             } else if (task.deadlineProperty().get().isAfter(LocalDate.now())) {
@@ -170,7 +156,9 @@ public class TasksController implements Initializable {
     private void addNewTask(CustomTextField textField, Calendar cal) {
         if (!textField.getText().isEmpty()) {
             LocalDate calVal = (cal.getValue() != null) ? cal.getValue() : LocalDate.now();
-            Task task = new Task(allTasks.size(), textField.getText(), calVal, 0.0, false);
+            Task task = new Task(Model.getInstance().getAllTasks().size(), textField.getText(), calVal, 0.0, false);
+            // Create new task in Model
+            Model.getInstance().createNewTask(task);
             addToAppropriateTaskList(task);
             clearTextFieldAndCalendar(textField, cal);
         }
@@ -183,13 +171,6 @@ public class TasksController implements Initializable {
         } else if (task.deadlineProperty().get().isAfter(LocalDate.now())) {
             upcomingTasks.add(task);
         }
-        setTaskListeners(task);
-        try {
-            DatabaseDriver.saveTask(task);
-            allTasks.add(task);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     // Clear text field and calendar after adding task
@@ -198,15 +179,6 @@ public class TasksController implements Initializable {
         cal.setValue(null);
     }
 
-    // Update selected date tasks
-    private void updateSelectedDateTasks() {
-        Model.getInstance().getTasksOnSelectedDate().clear();
-        for (Task allTask : allTasks) {
-            if (allTask.deadlineProperty().getValue().equals(Model.getInstance().selectedDateProperty().get())) {
-                Model.getInstance().getTasksOnSelectedDate().add(allTask);
-            }
-        }
-    }
 
     // Setup list view selection listeners
     private void setupListViewSelectionListeners() {
@@ -248,12 +220,7 @@ public class TasksController implements Initializable {
                 todayTasks.removeIf(t -> t.equals(task));
                 upcomingTasks.removeIf(t -> t.equals(task));
                 completedTasks.removeIf(t -> t.equals(task));
-                try {
-                    DatabaseDriver.deleteTask(task.idProperty().get());
-                    allTasks.remove(task);
-                } catch (SQLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                Model.getInstance().deleteTask(task);
             }
         });
     }
