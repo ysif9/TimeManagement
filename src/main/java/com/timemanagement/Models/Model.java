@@ -26,7 +26,6 @@ public class Model {
     private final DoubleProperty focusSliderValue;
     private final DoubleProperty breakSliderValue;
     private final ObjectProperty<Theme> theme;
-    private final BooleanProperty exitingFlag;
     private final ObjectProperty<LocalDate> selectedDate;
     private final ObservableList<Task> tasksOnSelectedDate;
 
@@ -36,7 +35,6 @@ public class Model {
         this.theme = new SimpleObjectProperty<>(this, "theme", Theme.DARK);
         this.focusSliderValue = new SimpleDoubleProperty();
         this.breakSliderValue = new SimpleDoubleProperty();
-        this.exitingFlag = new SimpleBooleanProperty(false);
         this.selectedDate = new SimpleObjectProperty<>();
         this.tasksOnSelectedDate = FXCollections.observableArrayList();
         loadTasksFromDatabase();
@@ -123,10 +121,6 @@ public class Model {
 
     public ObjectProperty<Theme> getThemeProperty() {
         return theme;
-    }
-
-    public BooleanProperty getExitingFlagProperty() {
-        return exitingFlag;
     }
 
     public ObjectProperty<LocalDate> selectedDateProperty() {

@@ -2,7 +2,6 @@ package com.timemanagement.Views;
 
 import com.timemanagement.ChosenNavItem;
 import com.timemanagement.Controllers.ApplicationController;
-import com.timemanagement.Models.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
@@ -81,8 +80,6 @@ public class ViewFactory {
         fxmlLoader.setController(controller);
         createStage(fxmlLoader);
         chosenNavItem.setValue(ChosenNavItem.FOCUS);
-        //Pre-load tasks
-        getTasksView();
     }
 
     private void createStage(FXMLLoader fxmlLoader) {
@@ -101,7 +98,6 @@ public class ViewFactory {
         stage.show();
         stage.setOnCloseRequest(e -> {
             e.consume();
-            Model.getInstance().getExitingFlagProperty().set(true);
             System.exit(0);
         });
     }

@@ -56,6 +56,8 @@ public class TasksController implements Initializable {
         // Setup list views
         setupListViews();
 
+        //CSS styling
+        toolbar_newtask.setStyle("-fx-border-width: 1px; -fx-border-color: -color-border-default;");
     }
 
     // Populate task lists based on task categories
