@@ -28,6 +28,7 @@ public class Model {
     private final ObjectProperty<Theme> theme;
     private final ObjectProperty<LocalDate> selectedDate;
     private final ObservableList<Task> tasksOnSelectedDate;
+    private BooleanProperty notificationOn;
 
     // Private constructor to enforce singleton pattern
     private Model() {
@@ -37,6 +38,7 @@ public class Model {
         this.breakSliderValue = new SimpleDoubleProperty();
         this.selectedDate = new SimpleObjectProperty<>();
         this.tasksOnSelectedDate = FXCollections.observableArrayList();
+        this.notificationOn = new SimpleBooleanProperty();
         loadTasksFromDatabase();
         // Listen for changes in selected date
         selectedDateProperty().addListener((observable) -> updateTasksOnSelectedDate());
@@ -129,6 +131,10 @@ public class Model {
 
     public ObservableList<Task> getTasksOnSelectedDate() {
         return tasksOnSelectedDate;
+    }
+
+    public BooleanProperty getNotificationOnProperty() {
+        return notificationOn;
     }
 
     private void updateTasksOnSelectedDate() {

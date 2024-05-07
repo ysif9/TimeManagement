@@ -12,6 +12,7 @@ package com.timemanagement.Controllers;
 import atlantafx.base.controls.*;
 import com.timemanagement.ChosenNavItem;
 import com.timemanagement.Models.Model;
+import com.timemanagement.Models.Notification;
 import com.timemanagement.Models.Task;
 import com.timemanagement.Models.Timer;
 import com.timemanagement.Styles;
@@ -21,9 +22,11 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.util.StringConverter;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -131,11 +134,17 @@ public class FocusController implements Initializable {
         focusTimer.timerDoneFlagProperty().addListener(observable -> {
             currentTimer.set(CurrentTimer.BREAK);
             right_btn.setSelected(true);
+            if (Model.getInstance().getNotificationOnProperty().get()) {
+                notification(CurrentTimer.FOCUS);
+            }
         });
 
         breakTimer.timerDoneFlagProperty().addListener(observable -> {
             currentTimer.set(CurrentTimer.FOCUS);
             left_btn.setSelected(true);
+            if (Model.getInstance().getNotificationOnProperty().get()) {
+                notification(CurrentTimer.BREAK);
+            }
         });
 
         // Bind ring progress indicator to string converter
@@ -289,6 +298,27 @@ public class FocusController implements Initializable {
             Model.getInstance().getSelectedTask().timeSpentInMinutesProperty().set(oldTaskValue + totalTimeInMinutes);
         }
     }
+
+    private void notification(CurrentTimer previousTimer) {
+        if (SystemTray.isSupported()) {
+            Notification td = new Notification();
+            String caption;
+            String description;
+            if (previousTimer.equals(CurrentTimer.FOCUS)) {
+                caption = "Focus Time Finished";
+                description = "Time for a break!";
+            } else {
+                caption = "Break Time Finished";
+                description = "Time to focus!";
+            }
+            try {
+                td.displayTray(caption, description);
+            } catch (AWTException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     // Enum for timer states
     public enum CurrentTimer {

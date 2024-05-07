@@ -12,6 +12,8 @@ import javafx.animation.Timeline;
 import javafx.beans.property.*;
 import javafx.util.Duration;
 
+import java.awt.*;
+
 public class Timer {
     // Properties
     private final LongProperty time;
@@ -59,6 +61,7 @@ public class Timer {
             if (System.currentTimeMillis() >= endTime) {
                 timerDoneFlag.set(true);
                 stopTimer();
+
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
