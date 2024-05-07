@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox fx:id="parent_vbox" alignment="TOP_CENTER" stylesheets="@../Styles/Tasks.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.timemanagement.Controllers.TasksController">
-    <HBox fx:id="toolbar_newtask" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="800.0" styleClass="newTask" />
+    <HBox fx:id="toolbar_newtask" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="800.0" />
     <Accordion fx:id="accordion" prefWidth="850.0">
         <panes>
-            <TitledPane fx:id="today_pane" maxHeight="-Infinity" prefWidth="770.0" text="Today">
+            <TitledPane styleClass="other-list" fx:id="today_pane" maxHeight="-Infinity" prefWidth="770.0" text="Today">
                 <ListView fx:id="today_listview" maxHeight="-Infinity" prefWidth="730.0" />
             </TitledPane>
             <TitledPane layoutX="30.0" layoutY="30.0" maxHeight="-Infinity" text="Upcoming">
-                <ListView fx:id="upcoming_listview" maxHeight="-Infinity" prefWidth="200.0" />
+                <ListView styleClass="other-list" fx:id="upcoming_listview" maxHeight="-Infinity" prefWidth="200.0" />
             </TitledPane>
             <TitledPane maxHeight="-Infinity" text="Completed">
-                <ListView fx:id="completed_listview" maxHeight="-Infinity" prefWidth="200.0" />
+                <ListView styleClass="chosen-list" fx:id="completed_listview" maxHeight="-Infinity" prefWidth="200.0" />
             </TitledPane>
         </panes>
     </Accordion>

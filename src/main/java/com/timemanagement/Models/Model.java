@@ -22,7 +22,7 @@ public class Model {
 
     // Properties
     private final ObservableList<Task> allTasks = FXCollections.observableArrayList();
-    private Task selectedTask;
+    private final ObjectProperty<Task> selectedTask;
     private final DoubleProperty focusSliderValue;
     private final DoubleProperty breakSliderValue;
     private final ObjectProperty<Theme> theme;
@@ -36,6 +36,7 @@ public class Model {
         this.theme = new SimpleObjectProperty<>(this, "theme", Theme.DARK);
         this.focusSliderValue = new SimpleDoubleProperty();
         this.breakSliderValue = new SimpleDoubleProperty();
+        this.selectedTask = new SimpleObjectProperty<>();
         this.selectedDate = new SimpleObjectProperty<>();
         this.tasksOnSelectedDate = FXCollections.observableArrayList();
         this.notificationOn = new SimpleBooleanProperty();
@@ -78,6 +79,19 @@ public class Model {
         }
     }
 
+    public void updateTask(Task task) {
+        try {
+            DatabaseDriver.saveTask(task);
+            allTasks.get(task.idProperty().get()).completedProperty().set(task.completedProperty().get());
+            allTasks.get(task.idProperty().get()).deadlineProperty().set(task.deadlineProperty().get());
+            var oldValue = selectedDateProperty().get();
+            selectedDateProperty().set(LocalDate.EPOCH);
+            selectedDateProperty().set(oldValue);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void deleteTask (Task task) {
         try {
             DatabaseDriver.deleteTask(task.idProperty().get());
@@ -101,12 +115,12 @@ public class Model {
     }
 
     // Getters and setters for properties
-    public Task getSelectedTask() {
+    public ObjectProperty<Task> getSelectedTask() {
         return selectedTask;
     }
 
     public void setSelectedTask(Task selectedTask) {
-        this.selectedTask = selectedTask;
+        this.selectedTask.set(selectedTask);
     }
 
     public DoubleProperty getFocusSlider() {
@@ -140,9 +154,15 @@ public class Model {
     private void updateTasksOnSelectedDate() {
         getTasksOnSelectedDate().clear();
         for (Task allTask : getAllTasks()) {
-            if (allTask.deadlineProperty().getValue().equals(selectedDateProperty().get())) {
+            if (allTask.deadlineProperty().getValue().equals(selectedDateProperty().get()) && !allTask.completedProperty().get()) {
                 Model.getInstance().getTasksOnSelectedDate().add(allTask);
             }
+        }
+    }
+
+    public void saveAllTasks() {
+        for (Task task : allTasks) {
+            updateTask(task);
         }
     }
 

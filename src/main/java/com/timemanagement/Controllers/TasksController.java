@@ -69,6 +69,10 @@ public class TasksController implements Initializable {
                 upcomingTasks.add(task);
             } else if (task.deadlineProperty().get().isEqual(LocalDate.now())) {
                 todayTasks.add(task);
+            } else if (task.deadlineProperty().get().isBefore(LocalDate.now())) {
+                task.deadlineProperty().set(LocalDate.now());
+                Model.getInstance().updateTask(task);
+                todayTasks.add(task);
             }
             setTaskListeners(task);
         }
@@ -163,6 +167,7 @@ public class TasksController implements Initializable {
             Model.getInstance().createNewTask(task);
             addToAppropriateTaskList(task);
             clearTextFieldAndCalendar(textField, cal);
+            setTaskListeners(task);
         }
     }
 
@@ -215,6 +220,7 @@ public class TasksController implements Initializable {
                 todayTasks.removeIf(t -> t.equals(task));
                 upcomingTasks.removeIf(t -> t.equals(task));
                 completedTasks.add(task);
+                Model.getInstance().updateTask(task);
             }
         });
         task.deleteFlagProperty().addListener((observable, oldValue, newValue) -> {

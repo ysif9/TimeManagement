@@ -59,7 +59,6 @@ public class Timer {
             if (System.currentTimeMillis() >= endTime) {
                 timerDoneFlag.set(true);
                 stopTimer();
-
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);

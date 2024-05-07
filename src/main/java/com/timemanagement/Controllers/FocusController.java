@@ -10,7 +10,6 @@
 package com.timemanagement.Controllers;
 
 import atlantafx.base.controls.*;
-import com.timemanagement.ChosenNavItem;
 import com.timemanagement.Models.Model;
 import com.timemanagement.Models.Notification;
 import com.timemanagement.Models.Task;
@@ -46,6 +45,8 @@ public class FocusController implements Initializable {
     private Timer breakTimer;
     private final ObjectProperty<CurrentTimer> currentTimer = new SimpleObjectProperty<>();
     private double oldTaskValue = 0;
+    private Task currentTask;
+    private double lastValue = 0.0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,10 +87,12 @@ public class FocusController implements Initializable {
 
     // Bind selected task to UI
     private void bindSelectedTask() {
-        Model.getInstance().getViewFactory().getChosenNavItem().addListener((observable, oldValue, newValue) -> {
-            if (newValue == ChosenNavItem.FOCUS) {
-                Task selectedTask = Model.getInstance().getSelectedTask();
-                setTask(selectedTask);
+        Model.getInstance().getSelectedTask().addListener((observable) -> {
+            if (Model.getInstance().getSelectedTask().isNotNull().get() && !Model.getInstance().getSelectedTask().get().equals(currentTask)) {
+                setTask(Model.getInstance().getSelectedTask().get());
+                currentTask = Model.getInstance().getSelectedTask().get();
+            } else if (Model.getInstance().getSelectedTask().isNull().get()) {
+                setTask(null);
             }
         });
     }
@@ -218,6 +221,11 @@ public class FocusController implements Initializable {
         VBox.setMargin(time_lbl, new Insets(0, 0, 0, 3));
         task_cb = new CheckBox();
         task_cb.getStyleClass().addAll(Styles.SUCCESS, Styles.TITLE_2);
+        task_cb.setOnAction(e -> {
+            if (task_cb.isSelected() && currentTask != null) {
+                currentTask.completedProperty().set(true);
+            }
+        });
 
         // Set up task VBox layout
         AnchorPane aPane = new AnchorPane(task_lbl, task_cb);
@@ -248,12 +256,6 @@ public class FocusController implements Initializable {
         } else {
             task_lbl.setText(task.taskNameProperty().get());
             Model.formatTaskTime(task, time_lbl);
-            task.completedProperty().bindBidirectional(task_cb.selectedProperty());
-            task.completedProperty().addListener((observableValue, oldValue, newValue) -> {
-                if (newValue) {
-                    setTask(null);
-                }
-            });
             oldTaskValue = task.timeSpentInMinutesProperty().get();
         }
     }
@@ -268,8 +270,8 @@ public class FocusController implements Initializable {
         } else {
             start_btn.setStyle("-fx-background-color: -color-accent-emphasis; -fx-effect: dropshadow(gaussian, -color-accent-muted, 0, 6, 0, 6);");
             start_btn.setText("START");
-            if (Model.getInstance().getSelectedTask() != null) {
-                oldTaskValue = Model.getInstance().getSelectedTask().timeSpentInMinutesProperty().get();
+            if (Model.getInstance().getSelectedTask().isNotNull().get()) {
+                oldTaskValue = Model.getInstance().getSelectedTask().get().timeSpentInMinutesProperty().get();
             }
             timerUsed.stopTimer();
         }
@@ -294,8 +296,12 @@ public class FocusController implements Initializable {
 
     // Update task time
     private void updateTaskTime(double totalTimeInMinutes) {
-        if (Model.getInstance().getSelectedTask() != null && totalTimeInMinutes != 0) {
-            Model.getInstance().getSelectedTask().timeSpentInMinutesProperty().set(oldTaskValue + totalTimeInMinutes);
+        if (Model.getInstance().getSelectedTask().isNotNull().get() && totalTimeInMinutes != 0) {
+            double valToAdd= totalTimeInMinutes - lastValue;
+            lastValue = totalTimeInMinutes;
+
+            Model.getInstance().getSelectedTask().get().timeSpentInMinutesProperty().set(oldTaskValue + valToAdd);
+            oldTaskValue = Model.getInstance().getSelectedTask().get().timeSpentInMinutesProperty().get();
         }
     }
 

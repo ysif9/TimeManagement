@@ -40,9 +40,18 @@ Accordion {
 .accordion .titled-pane .list-cell:empty {
 -fx-opacity: 0;
 }
+
+.other-list .list-view .list-cell:hover {
+    -fx-cursor: hand;
+    -fx-background-color: -color-neutral-muted;
+}
+
 .accordion .titled-pane .list-cell:selected {
     -fx-background-color: -color-accent-subtle;
 }
+
+
+
 
 .accordion .titled-pane ListView .scroll-bar:vertical {
     -fx-scale-x: 0;
@@ -63,4 +72,8 @@ ListView {
 .newTask TextField {
     -fx-font-family: Inter;
     -fx-font-size: 1.5em;
+}
+
+.chosen-list .list-cell:hover {
+    -fx-background-color: transparent;
 }

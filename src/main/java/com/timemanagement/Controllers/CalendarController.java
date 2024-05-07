@@ -9,10 +9,13 @@ package com.timemanagement.Controllers;
 
 import atlantafx.base.controls.Calendar;
 import com.timemanagement.Models.Model;
+import com.timemanagement.Models.Task;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class CalendarController implements Initializable {
@@ -29,14 +32,19 @@ public class CalendarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Model.getInstance().selectedDateProperty().bindBidirectional(calendar.valueProperty());
         // Listener to update tasks when the selected date changes
-        calendar.valueProperty().addListener((observableValue, oldVal, newVal) -> updateTasksOnSelectedDate());
+        calendar.valueProperty().addListener((observable) -> updateTasksOnSelectedDate());
+        // Manually change and go back to date to update tasks
+        Model.getInstance().getAllTasks().addListener((ListChangeListener<Task>) change -> {
+            var oldValue = calendar.valueProperty().get();
+            calendar.valueProperty().set(LocalDate.EPOCH);
+            calendar.valueProperty().set(oldValue);
+        });
     }
 
     // Method to update tasks displayed based on the selected date
     private void updateTasksOnSelectedDate() {
-        // Set selected date in the model
-        Model.getInstance().selectedDateProperty().set(calendar.getValue());
 
         // Update task labels based on tasks for the selected date
         updateTaskLabel(task1, 0);
