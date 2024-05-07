@@ -12,8 +12,6 @@ import javafx.animation.Timeline;
 import javafx.beans.property.*;
 import javafx.util.Duration;
 
-import java.awt.*;
-
 public class Timer {
     // Properties
     private final LongProperty time;

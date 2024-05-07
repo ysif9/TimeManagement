@@ -45,9 +45,7 @@ public class SettingsController implements Initializable {
         });
 
         // Notification toggle
-        notifications_toggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            Model.getInstance().getNotificationOnProperty().set(newValue);
-        });
+        notifications_toggle.selectedProperty().addListener((observable, oldValue, newValue) -> Model.getInstance().getNotificationOnProperty().set(newValue));
 
         // Bind sliders to model properties and update labels
         bindSlidersAndLabels();

@@ -28,7 +28,7 @@ public class Model {
     private final ObjectProperty<Theme> theme;
     private final ObjectProperty<LocalDate> selectedDate;
     private final ObservableList<Task> tasksOnSelectedDate;
-    private BooleanProperty notificationOn;
+    private final BooleanProperty notificationOn;
 
     // Private constructor to enforce singleton pattern
     private Model() {
