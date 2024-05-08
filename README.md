@@ -1,33 +1,58 @@
 Chronus is a time management application designed to help you keep track of your every days chores and assignments
 
-1.Installation 
+## 1. Compilation
 
-so far Chronus doesn't have an exe version , but it runs on java so it should be compatible  with most desktop devices.
-to run the application , you should run the app file in the following directory ../src/main/jav/com/timemanagement/App.java
+Using IntelliJ IDEA:
 
-2. Usage
+    a) Load the folder into IntelliJ IDEA.
+    b) Open the built-in terminal.
+    c) Run "mvn clean javafx:run"
 
-once you find the app , you can start using it right away without the hassle of creating an account. 
+Without an IDE:
 
-3.Feautures
+    a) Ensure Java JDK and Apache Maven are correctly set up on your device.
+    b) Navigate to the project's directory using the command line.
+    c) Run "mvn clean javafx:run"
+    
+Using github:
+    
+    git clone https://github.com/ysif9/TimeManagement
+    cd TimeManagement
+    mvn clean javafx:run
+    
+## 2. Manually Running the application
 
-Chronus comes with a good set of features that will help you get the best out of your time. Starting from 
-the focus timer that allows you to focus on a certain task till you finish it , or even the break timer
-that allows you to control your break time, so you don't end up with a two days break. Not only that but it allows
-you to add tasks with their deadline so you keep track of their time and also allows you to view them according to their 
-time in the task view or in the calendar so you keep track of what tasks on what day. It also comes with the ability to
-change themes for those night owls out there. In addition, to change focus and break time for those with a short
-attention span. 
+To initiate the app, ensure you have Java SDK installed on your device, along with Apache Maven, and a Java IDE like IntelliJ IDEA. The app directory should reside at /path/src/main/java/com/timemanagement/app.java.
 
-4.Troubleshooting and support
+## 3. Usage
 
-The app has been tested for most possible errors but if still happens, you can try to restart the app and contact us
-on our GitHub page.
+App can be started by loading the folder into an IDE then running the App.java file.
 
-5.Contributing
+## 4. Features
 
-We would be glad to see your contributions in the app. If you'd like to contribute to Chronus, please fork the repository, make your changes, and submit a pull request. For major changes, please open an issue first to discuss the proposed changes.
+Chronus offers a robust set of features to enhance your time management:
 
-6.License 
+- Focus timer
+- Break timer
+- Task management
+- Theme switching
+- Customizable focus and break times
+- Calendar view
 
-Chronus doesn't have any real license yet. but it should be in the near future.
+## 5. Troubleshooting and Support
+
+Although the app has undergone extensive testing for potential errors, should any issues persist, attempt to restart the app and reach out to us via our GitHub page for further assistance.
+
+## 6. Contributing
+
+We welcome contributions to Chronus. If you wish to contribute, kindly fork the repository, implement your changes, and submit a pull request. For significant alterations, please initiate an issue to deliberate on the proposed adjustments.
+
+## 7. License
+
+Currently, Chronus does not have a designated license; however, one is anticipated in the near future.
+
+Working Environment:
+
+Java JDK 17 or higher
+Apache Maven
+IDE: IntelliJ IDEA
