@@ -1,3 +1,12 @@
+<h3 align="center">
+  <img src="https://github.com/ysif9/TimeManagement/blob/master/src/main/resources/Images/logo3.png" width="60" alt="Logo"/><br/>
+  Chronus
+</h3>
+
+<p align="center" float="left">
+<img src="https://github.com/ysif9/TimeManagement/blob/master/src/main/resources/Images/Dashboard2.png" width ="500" alt="Dashboard"/>
+<img src="https://github.com/ysif9/TimeManagement/blob/master/src/main/resources/Images/Task%20Page.png" width ="500" alt="Tasks"/>
+</p>
 Chronus is a time management application designed to help you keep track of your every days chores and assignments
 
 ## 1. Compilation
